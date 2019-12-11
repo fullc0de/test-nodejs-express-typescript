@@ -1,5 +1,4 @@
 import {HttpRequest, HttpResponse} from "./interfaces";
-import {throws} from "assert";
 
 export class PostController {
 
