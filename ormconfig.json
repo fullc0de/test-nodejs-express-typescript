@@ -1,0 +1,17 @@
+[{
+    "name": "postgresdb",
+    "type": "postgres",
+    "url": "postgres://postgres:123456@127.0.0.1/test",
+    "entities": [
+        "build/model/**/*.js"
+    ],
+    "migrations": [
+        "build/migration/**/*.js"
+    ],
+    "synchronize": false,
+    "logging": ["query", "error", "schema"]
+}, {
+    "name": "mysqldb",
+    "type": "mysql",
+    "url": "mysql://root:123456@127.0.0.1/test"
+}]
