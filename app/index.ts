@@ -6,7 +6,6 @@ import { Warrior } from "./interfaces"
 import {createConnection} from "typeorm";
 import {Employee} from "./model/Employee";
 import {Employer} from "./model/Employer";
-import {PostController} from "./controller/post-controller";
 import router from "./router"
 
 const app: express.Application = express()
@@ -45,9 +44,6 @@ createConnection("postgresdb").then( connection => {
 // app.use('/admin', adminRoute)
 
 app.use(router)
-// app.get('/', (req, res) => {
-//     res.send({error: "wefwef"})
-// })
 
 app.listen(3000, function() {
     console.log('Example app listening on port: 3000!')
