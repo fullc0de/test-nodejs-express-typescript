@@ -1,6 +1,7 @@
-import {HttpRequest, HttpResponse} from "./interfaces";
+import {HttpRequest, HttpResponse} from "../interfaces";
+import BaseController from "../base-controller";
 
-export class CommentController {
+export class CommentController extends BaseController {
 
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {
@@ -11,12 +12,12 @@ export class CommentController {
     }
 
     public async show(request: HttpRequest): Promise<HttpResponse> {
-        const params = request.params
+        const commentId = super.validateParamId(request.params.id)
         return {
             headers: {},
             statusCode: 200,
             body: {
-                id: params.id,
+                id: commentId,
                 author: "Heath Hwang",
                 message: "Good job!!"
             }
@@ -43,13 +44,14 @@ export class CommentController {
     }
 
     public async postComment(request: HttpRequest): Promise<HttpResponse> {
-        const params = request.params
+        const postId = super.validateParamId(request.params.postId)
+        const commentId = super.validateParamId(request.params.id)
         return {
             headers: {},
             statusCode: 200,
             body: {
-                id: params.id,
-                post_id: params.postId,
+                id: commentId,
+                post_id: postId,
                 author: "Heath Hwang",
                 message: "Good job!!"
             }

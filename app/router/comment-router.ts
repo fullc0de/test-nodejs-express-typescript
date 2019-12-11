@@ -1,11 +1,23 @@
 import {Router} from "express";
-import {CommentController} from "../controller/comment-controller";
+import {CommentController as CommentControllerV1 } from "../controller/v1/comment-controller";
+import {CommentController as CommentControllerV2 } from "../controller/v2/comment-controller";
 import {makeExpressCallback} from "../router-callback";
 
-const commentRouter = Router({ mergeParams: true })
-const commentController = new CommentController()
+const commentClassTable: { [key: string]: any } = {
+    v1: CommentControllerV1,
+    v2: CommentControllerV2
+}
 
-commentRouter.get('/', makeExpressCallback(commentController.index))
-commentRouter.get('/:id', makeExpressCallback(commentController.show))
+function makeCommentRouter(version: string): Router {
+    const commentRouter = Router({ mergeParams: true })
+    const commentController = new commentClassTable[version]()
 
-export default commentRouter
+    commentRouter.get('/', makeExpressCallback(commentController.index))
+    commentRouter.get('/test', makeExpressCallback(commentController.test))
+    commentRouter.get('/:id', makeExpressCallback(commentController.show))
+
+
+    return commentRouter
+}
+
+export default makeCommentRouter

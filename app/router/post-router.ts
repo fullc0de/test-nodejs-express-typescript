@@ -1,16 +1,33 @@
 import {Router} from "express";
-import {PostController} from "../controller/post-controller";
+
+import {PostController as PostControllerV1 } from "../controller/v1/post-controller";
+import {PostController as PostControllerV2 } from "../controller/v2/post-controller";
+import {CommentController as CommentControllerV1 } from "../controller/v1/comment-controller";
+import {CommentController as CommentControllerV2 } from "../controller/v2/comment-controller";
 import {makeExpressCallback} from "../router-callback";
-import {CommentController} from "../controller/comment-controller";
 
-const postRouter = Router({ mergeParams: true })
-const postController = new PostController()
-const commentController = new CommentController()
+const postClassTable: { [key: string]: any } = {
+    v1: PostControllerV1,
+    v2: PostControllerV2
+}
 
-postRouter.get('/', makeExpressCallback(postController.index))
-postRouter.get('/:id', makeExpressCallback(postController.show))
+const commentClassTable: { [key: string]: any } = {
+    v1: CommentControllerV1,
+    v2: CommentControllerV2
+}
 
-postRouter.get('/:postId/comments', makeExpressCallback(commentController.postComments))
-postRouter.get('/:postId/comments/:id', makeExpressCallback(commentController.postComment))
+function makePostRouter(version: string): Router {
+    const postRouter = Router({ mergeParams: true })
+    const postController = new postClassTable[version]()
+    const commentController = new commentClassTable[version]()
 
-export default postRouter
+    postRouter.get('/', makeExpressCallback(postController.index))
+    postRouter.get('/:id', makeExpressCallback(postController.show))
+
+    postRouter.get('/:postId/comments', makeExpressCallback(commentController.postComments))
+    postRouter.get('/:postId/comments/:id', makeExpressCallback(commentController.postComment))
+
+    return postRouter
+}
+
+export default makePostRouter

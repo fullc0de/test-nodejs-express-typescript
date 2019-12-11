@@ -44,6 +44,9 @@ createConnection("postgresdb").then( connection => {
 // app.use('/admin', adminRoute)
 
 app.use(router)
+app.get('*', (req, res) => {
+    res.sendStatus(404)//.send('Not Found')
+})
 
 app.listen(3000, function() {
     console.log('Example app listening on port: 3000!')
