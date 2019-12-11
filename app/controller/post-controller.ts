@@ -13,7 +13,6 @@ export class PostController {
 
     public async show(request: HttpRequest): Promise<HttpResponse> {
         const params = request.params
-        throws({}, "error!")
         return {
             headers: { "Hello": "World" },
             statusCode: 200,
