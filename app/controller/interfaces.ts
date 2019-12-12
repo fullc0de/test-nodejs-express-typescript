@@ -9,7 +9,7 @@ export interface HttpRequest {
 }
 
 export interface HttpResponse {
-    headers: {}
+    headers?: {}
     statusCode: number
     body: string | {}
 }

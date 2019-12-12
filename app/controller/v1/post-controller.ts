@@ -5,7 +5,6 @@ export class PostController extends BaseController {
 
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {
-            headers: { "Hello": "World" },
             statusCode: 200,
             body: { message: "wow success! V1" }
         }
@@ -14,7 +13,6 @@ export class PostController extends BaseController {
     public async show(request: HttpRequest): Promise<HttpResponse> {
         const postId = super.validateParamId(request.params.id)
         return {
-            headers: { "Hello": "World" },
             statusCode: 200,
             body: {
                 id: postId,

@@ -5,7 +5,6 @@ export class CommentController extends BaseController {
 
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {
-            headers: {},
             statusCode: 200,
             body: { message: "no comment" }
         }
@@ -14,7 +13,6 @@ export class CommentController extends BaseController {
     public async show(request: HttpRequest): Promise<HttpResponse> {
         const commentId = super.validateParamId(request.params.id)
         return {
-            headers: {},
             statusCode: 200,
             body: {
                 id: commentId,
@@ -27,7 +25,6 @@ export class CommentController extends BaseController {
     public async postComments(request: HttpRequest): Promise<HttpResponse> {
         const params = request.params
         return {
-            headers: {},
             statusCode: 200,
             body: [{
                 id: 1,
@@ -47,7 +44,6 @@ export class CommentController extends BaseController {
         const postId = super.validateParamId(request.params.postId)
         const commentId = super.validateParamId(request.params.id)
         return {
-            headers: {},
             statusCode: 200,
             body: {
                 id: commentId,

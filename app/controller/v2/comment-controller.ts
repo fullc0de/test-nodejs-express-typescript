@@ -3,8 +3,9 @@ import {HttpRequest, HttpResponse} from "../interfaces";
 
 export class CommentController extends V1 {
     public async test(request: HttpRequest): Promise<HttpResponse> {
+        const nodes = [1, 2, 3]
+
         return {
-            headers: {},
             statusCode: 200,
             body: {
                 id: 333,
