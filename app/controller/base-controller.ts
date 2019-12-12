@@ -1,5 +1,5 @@
 
-export default class BaseController {
+export default abstract class BaseController {
     public validateParamId(id: string): number {
         const converted = +id
         if (Number.isNaN(converted)) {

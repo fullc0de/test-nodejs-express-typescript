@@ -1,7 +1,7 @@
 import {HttpRequest, HttpResponse} from "./controller";
 import {Request, Response} from "express";
 
-function makeExpressCallback(callback: (request: HttpRequest) => Promise<HttpResponse>): (req: Request, res: Response) => void {
+function makeExpressCallback(callback?: (request: HttpRequest) => Promise<HttpResponse>): (req: Request, res: Response) => void {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"})
