@@ -1,31 +1,29 @@
 import {Router} from "express";
 
-import {PostController as PostControllerV1 } from "../controller/v1/post-controller";
-import {PostController as PostControllerV2 } from "../controller/v2/post-controller";
-import {CommentController as CommentControllerV1 } from "../controller/v1/comment-controller";
-import {CommentController as CommentControllerV2 } from "../controller/v2/comment-controller";
-import {makeExpressCallback} from "../router-callback";
-
-const postClassTable: { [key: string]: any } = {
-    v1: PostControllerV1,
-    v2: PostControllerV2
-}
-
-const commentClassTable: { [key: string]: any } = {
-    v1: CommentControllerV1,
-    v2: CommentControllerV2
-}
+import makeExpressCallback from "../router-callback";
+import {createController} from "../controller";
+import {Resource} from "../enum";
+import PostControllerInterface from "../controller/interface/post-controller-interface";
+import CommentControllerInterface from "../controller/interface/comment-controller-interface";
 
 function makePostRouter(version: string): Router {
     const postRouter = Router({ mergeParams: true })
-    const postController = new postClassTable[version]()
-    const commentController = new commentClassTable[version]()
 
-    postRouter.get('/', makeExpressCallback(postController.index))
-    postRouter.get('/:id', makeExpressCallback(postController.show))
+    createController(Resource.Post, version, (controller) => {
+        if (controller) {
+            const postInterface = controller as PostControllerInterface
+            postRouter.get('/', makeExpressCallback(postInterface.index))
+            postRouter.get('/:id', makeExpressCallback(postInterface.show))
+        }
+    })
 
-    postRouter.get('/:postId/comments', makeExpressCallback(commentController.postComments))
-    postRouter.get('/:postId/comments/:id', makeExpressCallback(commentController.postComment))
+    createController(Resource.Comment, version, (controller) => {
+        if (controller) {
+            const commentInterface = controller as CommentControllerInterface
+            postRouter.get('/:postId/comments', makeExpressCallback(commentInterface.postComments))
+            postRouter.get('/:postId/comments/:id', makeExpressCallback(commentInterface.postComment))
+        }
+    })
 
     return postRouter
 }

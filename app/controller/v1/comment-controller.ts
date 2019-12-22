@@ -1,7 +1,8 @@
 import {HttpRequest, HttpResponse} from "../interfaces";
 import BaseController from "../base-controller";
+import CommentControllerInterface from "../interface/comment-controller-interface";
 
-export class CommentController extends BaseController {
+export class CommentController extends BaseController implements CommentControllerInterface {
 
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {

@@ -1,7 +1,8 @@
 import {HttpRequest, HttpResponse} from "../interfaces";
 import BaseController from "../base-controller";
+import PostControllerInterface from "../interface/post-controller-interface";
 
-export class PostController extends BaseController {
+export class PostController extends BaseController implements PostControllerInterface {
 
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {

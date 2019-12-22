@@ -1,12 +1,13 @@
 import {HttpRequest, HttpResponse} from "./controller";
 import {Request, Response} from "express";
 
-function makeExpressCallback(callback?: (request: HttpRequest) => Promise<HttpResponse>): (req: Request, res: Response) => void {
+export default function makeExpressCallback(callback?: (request: HttpRequest) => Promise<HttpResponse>): (req: Request, res: Response) => void {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"})
             return
         }
+        console.log(`pid=${process.pid}, start`)
         const httpReq: HttpRequest = {
             body: req.body,
             query: req.query,
@@ -27,9 +28,7 @@ function makeExpressCallback(callback?: (request: HttpRequest) => Promise<HttpRe
         } catch (e) {
             res.status(500).send({ error: `internal error has been occurred. (${e.message})`})
         }
+        console.log(`pid=${process.pid}, end`)
     }
 }
 
-export {
-    makeExpressCallback
-}
