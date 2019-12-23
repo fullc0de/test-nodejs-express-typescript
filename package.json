@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "NODE_ENV=development && tsc && ts-node-dev --respawn --transpileOnly ./app/index.ts",
-    "prod": "NODE_ENV=production && tsc && node ./build/index.js",
+    "local": "tsc && NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "dev": "tsc && NODE_ENV=development ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "prod": "tsc && NODE_ENV=production node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

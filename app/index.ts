@@ -8,8 +8,8 @@ import router from "./router"
 import * as dotenv from "dotenv";
 
 dotenv.config()
-if (process.env.NODE_ENV == "development") {
-    dotenv.config({path: `${__dirname}/../.env.dev`})
+if (process.env.NODE_ENV == "local") {
+    dotenv.config({path: `${__dirname}/../.env.local`})
 }
 
 const app: express.Application = express()

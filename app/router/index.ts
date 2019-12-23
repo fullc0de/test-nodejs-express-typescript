@@ -8,7 +8,7 @@ import makeCommentRouter from "./comment-router";
 const router = Router()
 
 router.get('/', (req, res) => {
-    res.send("<h1>Welcome to ROOOOOOOT!!</h1>")
+    res.send("<h1>Welcome to ROOT!!</h1>")
 })
 
 const controllerPath = path.join(__dirname, '../controller')
