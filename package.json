@@ -5,18 +5,20 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "tsc && ts-node-dev --respawn --transpileOnly ./app/index.ts",
-    "prod": "tsc && node ./build/index.js",
+    "dev": "NODE_ENV=development && tsc && ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "prod": "NODE_ENV=production && tsc && node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.2",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.14",
     "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
     "lodash": "^4.17.15",

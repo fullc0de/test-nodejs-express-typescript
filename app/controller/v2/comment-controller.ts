@@ -5,8 +5,8 @@ import axios from "axios";
 
 export class CommentController extends V1 {
     public async test(request: HttpRequest): Promise<HttpResponse> {
-        let aaa = await axios.get('http://localhost:5000/wow')
-        console.log(`axios response = ${aaa.data}`)
+        // let aaa = await axios.get('http://localhost:5000/wow')
+        // console.log(`axios response = ${aaa.data}`)
 
         const employer = await Employer.findOne(1)
         if (employer == undefined) {

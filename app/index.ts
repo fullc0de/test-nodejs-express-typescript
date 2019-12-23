@@ -3,45 +3,35 @@ import express, {Router} from "express"
 import { myContainer } from "./inversify.config"
 import { TYPES } from "./types"
 import { Warrior } from "./interfaces"
-import {createConnection} from "typeorm";
-import {Employee} from "./model/Employee";
-import {Employer} from "./model/Employer";
+import {createConnections, getConnectionOptions} from "typeorm";
 import router from "./router"
+import * as dotenv from "dotenv";
+
+dotenv.config()
+if (process.env.NODE_ENV == "development") {
+    dotenv.config({path: `${__dirname}/../.env.dev`})
+}
 
 const app: express.Application = express()
-const ninja = myContainer.get<Warrior>(TYPES.Warrior)
+const ninja = myContainer.get<Warrior>(TYPES.Warrior);
 
-createConnection("postgresdb").then( connection => {
-        console.log(`conn name = ${connection.name}`)
-        Employee.useConnection(connection)
-        Employer.useConnection(connection)
-    }).catch( error => console.log(error) )
-
-// app.get('/', async (req, res) => {
-//     const employees = await Employee.find()
-//     const employer = await Employer.findOne(1)
-//     res.send(`Hello WORLD!! ${ninja.fight()}, employer = ${employer?.name}, employee = ${employees[0].name}`)
-// })
-
-// let userRoute = Router({ mergeParams: true })
-// let adminRoute = Router()
-//
-// userRoute.get('/:id', (req, res) => {
-//     if (req.params.adminId) {
-//         res.send(`admin(${req.params.adminId}) user(${req.params.id}) world!`)
-//     } else {
-//         res.send(`user(${req.params.id}) world!`)
-//     }
-// })
-//
-// adminRoute.get('/:id', (req, res) => {
-//     res.send(`admin world!!! ${req.params.id}`)
-// })
-//
-// adminRoute.use('/:adminId/user', userRoute)
-//
-// app.use('/user', userRoute)
-// app.use('/admin', adminRoute)
+(async () => {
+    let postgresOpts = await getConnectionOptions("postgresdb")
+    if (process.env.POSTGRES_URL) {
+        Object.assign(postgresOpts, { url: process.env.POSTGRES_URL})
+    }
+    let mysqlOpts = await getConnectionOptions("mysqldb")
+    if (process.env.MYSQL_URL) {
+        Object.assign(mysqlOpts, { url: process.env.MYSQL_URL})
+    }
+    const conns = await createConnections([postgresOpts, mysqlOpts])
+    conns.forEach(conn => {
+        console.log(`conn name = ${conn.name}`)
+    })
+})().catch(e => {
+    // Deal with the fact the chain failed
+    console.log(e)
+});
 
 app.use(router)
 app.use('*', (req, res, next) => {
