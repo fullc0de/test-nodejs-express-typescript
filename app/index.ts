@@ -16,7 +16,7 @@ const app: express.Application = express()
 const ninja = myContainer.get<Warrior>(TYPES.Warrior);
 
 (async () => {
-    let postgresOpts = await getConnectionOptions("postgresdb")
+    let postgresOpts = await getConnectionOptions("default")
     if (process.env.POSTGRES_URL) {
         Object.assign(postgresOpts, { url: process.env.POSTGRES_URL})
     }

@@ -8,6 +8,7 @@
     "local": "tsc && NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
     "dev": "tsc && NODE_ENV=development node ./build/index.js",
     "prod": "tsc && NODE_ENV=production node ./build/index.js",
+    "console": "NODE_ENV=local node --experimental-repl-await -i -r ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

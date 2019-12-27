@@ -1,5 +1,5 @@
 [{
-    "name": "postgresdb",
+    "name": "default",
     "type": "postgres",
     "url": "{use $POSTGRES_URL env}",
     "entities": [
