@@ -5,25 +5,13 @@ import { TYPES } from "./types"
 import { Warrior } from "./interfaces"
 import {createConnections, getConnectionOptions} from "typeorm";
 import router from "./router"
-import * as dotenv from "dotenv";
-
-dotenv.config()
-if (process.env.NODE_ENV == "local") {
-    dotenv.config({path: `${__dirname}/../.env.local`})
-}
 
 const app: express.Application = express()
 const ninja = myContainer.get<Warrior>(TYPES.Warrior);
 
 (async () => {
     let postgresOpts = await getConnectionOptions("default")
-    if (process.env.POSTGRES_URL) {
-        Object.assign(postgresOpts, { url: process.env.POSTGRES_URL})
-    }
     let mysqlOpts = await getConnectionOptions("mysqldb")
-    if (process.env.MYSQL_URL) {
-        Object.assign(mysqlOpts, { url: process.env.MYSQL_URL})
-    }
     const conns = await createConnections([postgresOpts, mysqlOpts])
     conns.forEach(conn => {
         console.log(`conn name = ${conn.name}`)

@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "local": "tsc && NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "local:ts": "tsc && NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "local": "tsc && NODE_ENV=local node ./build/index.js",
     "dev": "tsc && NODE_ENV=development node ./build/index.js",
     "prod": "tsc && NODE_ENV=production node ./build/index.js",
-    "console": "NODE_ENV=local node --experimental-repl-await -i -r ./build/index.js",
+    "console": "tsc && NODE_ENV=local node --experimental-repl-await -i -r ./build/index.js",
+    "typeorm": "tsc && NODE_ENV=production ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
+    "typeorm:dev": "tsc && NODE_ENV=development ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
+    "typeorm:local": "tsc && NODE_ENV=local ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
