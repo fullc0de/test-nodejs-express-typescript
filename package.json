@@ -13,7 +13,7 @@
     "typeorm": "tsc && NODE_ENV=production ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "typeorm:dev": "tsc && NODE_ENV=development ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "typeorm:local": "tsc && NODE_ENV=local ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -34,5 +34,10 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "typeorm": "^0.2.21",
     "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0"
   }
 }
