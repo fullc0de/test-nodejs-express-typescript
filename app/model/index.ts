@@ -1,6 +1,10 @@
 
-import { User } from './User';
+import { User } from './user';
+import { Bar } from './bar';
+import { Foo } from './foo';
 
 export {
-    User
+    User,
+    Foo,
+    Bar
 }

@@ -1,10 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { CommonEntity } from './common-entity';
 
 @Entity()
-export class User extends BaseEntity {
-
-    @PrimaryGeneratedColumn()
-    public id: number = 0
+export class User extends CommonEntity {
 
     @Column({nullable: true})
     public firstName: string = ''
@@ -12,12 +10,4 @@ export class User extends BaseEntity {
     @Column({nullable: true})
     public lastName: string = ''
 
-    @CreateDateColumn()
-    public createdAt: Date = new Date();
-
-    @UpdateDateColumn()
-    public updatedAt: Date = new Date();
-
-    @VersionColumn()
-    public version: number = 0;
 }
