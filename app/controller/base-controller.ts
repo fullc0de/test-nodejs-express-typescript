@@ -1,10 +1,10 @@
 
 export default abstract class BaseController {
-    public validateParamId(id: string): number {
-        const converted = +id
+    public validateParamId(id: string): number | Error {
+        const converted = +id;
         if (Number.isNaN(converted)) {
-            throw new Error(`invalid resource parameter (${id})`)
+            return new Error(`invalid resource parameter (${id})`);
         }
-        return converted
+        return converted;
     }
 }

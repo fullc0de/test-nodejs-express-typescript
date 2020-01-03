@@ -13,6 +13,10 @@ export class PostController extends BaseController implements PostControllerInte
 
     public async show(request: HttpRequest): Promise<HttpResponse> {
         const postId = super.validateParamId(request.params.id)
+        if (postId instanceof Error) {
+            throw postId
+        }
+        
         return {
             statusCode: 200,
             body: {
