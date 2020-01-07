@@ -16,6 +16,15 @@ const app: express.Application = express();
     console.log(e);
 });
 
+// passport.use(new facebookPassport.Strategy({
+//     clientID: '700863590736873',
+//     clientSecret: 'ec94fb04903e57eb8ce0d4fdcf7553fd',
+//     callbackURL: 'http://localhost:3000/auth/facebook/callback'
+// }, (token, refToken, profile, cb) => {
+//     console.log(`token = ${token}, userid = ${profile.id}`);
+//     cb(null, null, null);
+// }));
+
 app.use(router);
 
 app.use('*', (req, res, next) => {
