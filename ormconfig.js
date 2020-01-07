@@ -1,15 +1,15 @@
 
-let dotenv = require('dotenv');
+// let dotenv = require('dotenv');
 
-dotenv.config();
-if (process.env.NODE_ENV == "local") {
-    dotenv.config({path: `${__dirname}/.env.local`});
-}
+// dotenv.config();
+// if (process.env.NODE_ENV == "local") {
+//     dotenv.config({path: `${__dirname}/.env.local`});
+// }
 
 module.exports = [{
     "name": "default",
     "type": "postgres",
-    "url": process.env.POSTGRES_URL,
+    "url": "wefwefwefwef",//process.env.POSTGRES_URL,
     "entities": [
         "build/model/**/*.js"
     ],
@@ -25,5 +25,5 @@ module.exports = [{
 }, {
     "name": "mysqldb",
     "type": "mysql",
-    "url": process.env.MYSQL_URL
+    "url": "Wefwefwefwef"//process.env.MYSQL_URL
 }];
