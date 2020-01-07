@@ -10,4 +10,5 @@ export class User extends CommonEntity {
     @Column({nullable: true})
     public lastName: string = ''
 
+    
 }
