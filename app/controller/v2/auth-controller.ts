@@ -8,7 +8,7 @@ export class AuthController extends BaseController implements AuthControllerInte
 
         return {
             statusCode: 500,
-            body: {}
+            body: { hello: 'world' }
         }
     }
 }
