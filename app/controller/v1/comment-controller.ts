@@ -1,4 +1,4 @@
-import {HttpRequest, HttpResponse} from "../interfaces";
+import {HttpRequest, HttpResponse} from "../common-interfaces";
 import BaseController from "../base-controller";
 import CommentControllerInterface from "../interface/comment-controller-interface";
 

@@ -1,5 +1,5 @@
 import { CommentController as V1 } from "../v1/comment-controller";
-import {HttpRequest, HttpResponse} from "../interfaces";
+import {HttpRequest, HttpResponse} from "../common-interfaces";
 import axios from "axios";
 import {getManager} from "typeorm";
 

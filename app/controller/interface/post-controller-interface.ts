@@ -1,7 +1,7 @@
-import {HttpRequest, HttpResponse} from "../interfaces";
+import {RoutableFunction} from "../common-interfaces";
 
 export default interface PostControllerInterface {
     // v1 ~
-    index?(request: HttpRequest): Promise<HttpResponse>
-    show?(request: HttpRequest): Promise<HttpResponse>
-}
+    index?: RoutableFunction;
+    show?: RoutableFunction;
+};

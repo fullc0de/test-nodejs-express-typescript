@@ -1,13 +1,13 @@
-import {HttpRequest, HttpResponse} from "./controller";
 import {Request, Response} from "express";
+import { RoutableFunction, HttpRequest } from "./controller/common-interfaces";
 
-export default function makeExpressCallback(callback?: (request: HttpRequest) => Promise<HttpResponse>): (req: Request, res: Response) => void {
+export default function makeExpressCallback(callback?: RoutableFunction): (req: Request, res: Response) => void {
     return async (req, res) => {
         if (callback === undefined) {
-            res.status(500).send({ error: "No routing function defined"})
-            return
+            res.status(500).send({ error: "No routing function defined"});
+            return;
         }
-        console.log(`pid=${process.pid}, start`)
+
         const httpReq: HttpRequest = {
             body: req.body,
             query: req.query,
@@ -17,18 +17,17 @@ export default function makeExpressCallback(callback?: (request: HttpRequest) =>
                 Referer: req.get('referer'),
                 'User-Agent': req.get('User-Agent')
             }
-        }
+        };
         try {
-            let httpRes = await callback(httpReq)
+            let httpRes = await callback(httpReq);
             if (httpRes.headers) {
-                res.set(httpRes.headers)
+                res.set(httpRes.headers);
             }
-            res.type('json')
-            res.status(httpRes.statusCode).send(httpRes.body)
+            res.type('json');
+            res.status(httpRes.statusCode).send(httpRes.body);
         } catch (e) {
-            res.status(500).send({ error: `internal error has been occurred. (${e.message})`})
+            res.status(500).send({ error: `internal error has been occurred. (${e.message})`});
         }
-        console.log(`pid=${process.pid}, end`)
-    }
+    };
 }
 

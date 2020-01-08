@@ -4,20 +4,22 @@ import fs from "fs";
 import * as path from "path";
 import makePostRouter from "./post-router";
 import makeCommentRouter from "./comment-router";
+import makeAuthRouter from './auth-router';
 
-const router = Router()
+const router = Router();
 
 router.get('/', (req, res) => {
-    res.send("<h1>Welcome to ROOT!!</h1>")
+    res.send("<h1>Welcome to ROOT!!</h1>");
 })
 
-const controllerPath = path.join(__dirname, '../controller')
+const controllerPath = path.join(__dirname, '../controller');
 
 fs.readdirSync(controllerPath, {withFileTypes: true}).forEach( (dir) => {
     if (dir.name[0] === 'v') {
-        router.use(`/api/${dir.name}/posts`, makePostRouter(dir.name))
-        router.use(`/api/${dir.name}/comments`, makeCommentRouter(dir.name))
+        router.use(`/api/${dir.name}/auth`, makeAuthRouter(dir.name));
+        router.use(`/api/${dir.name}/posts`, makePostRouter(dir.name));
+        router.use(`/api/${dir.name}/comments`, makeCommentRouter(dir.name));
     }
-})
+});
 
-export default router
+export default router;

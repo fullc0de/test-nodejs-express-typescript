@@ -1,4 +1,4 @@
-import {HttpRequest, HttpResponse} from "./interfaces"
+import {HttpRequest, HttpResponse} from "./common-interfaces"
 import {Resource} from "../enum";
 import BaseController from "./base-controller";
 import v1Controller from "./v1";
