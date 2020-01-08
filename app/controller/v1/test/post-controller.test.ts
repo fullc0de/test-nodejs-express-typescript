@@ -30,9 +30,7 @@ describe('PostController V1', () => {
         it('get current user', async () => {
             let user = await controller.currentUser('EAAJ9boVcoZBkBACowZA6VDyUJZAsmr73uQdqlG6LfWBT4wZB1BK18EGsETscnWrMw05KP4oulYaZB2JZACKZB4708fDMpM8tVtV4TpyOJdDkzSypgvWwuikRx1imE30HHlfAZBUytOzdu76ZCNMswdva7z3IQPlZCHFWoCmnoDAGZCatAZDZD');
             if (user != null) {
-                expect(user.id).toBe(1);
-                expect(user.firstName).toBe('KyoKook');
-                expect(user.lastName).toBe('Hwang');    
+                expect(user).toMatchSnapshot();
             }
         })
     });

@@ -17,6 +17,9 @@ build
 # WebStorm
 .idea
 
+# Visual Studio Code
+.vscode
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

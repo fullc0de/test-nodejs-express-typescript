@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostController V1 - check functionality of base controller get current user 1`] = `
+User {
+  "createdAt": 2020-01-02T02:31:27.593Z,
+  "firstName": "KyoKook",
+  "id": 1,
+  "lastName": "Hwang",
+  "updatedAt": 2020-01-02T17:34:49.591Z,
+  "version": 2,
+}
+`;
