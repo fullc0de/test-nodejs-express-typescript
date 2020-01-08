@@ -27,8 +27,10 @@ describe('PostController V1', () => {
     let controller = new PostController();
 
     describe('- check functionality of base controller', () => {
+        expect.assertions(2);
         it('get current user', async () => {
             let user = await controller.currentUser('EAAJ9boVcoZBkBACowZA6VDyUJZAsmr73uQdqlG6LfWBT4wZB1BK18EGsETscnWrMw05KP4oulYaZB2JZACKZB4708fDMpM8tVtV4TpyOJdDkzSypgvWwuikRx1imE30HHlfAZBUytOzdu76ZCNMswdva7z3IQPlZCHFWoCmnoDAGZCatAZDZD');
+            expect(user).toBeTruthy();
             if (user != null) {
                 expect(user).toMatchSnapshot();
             }
