@@ -9,6 +9,7 @@ import { APIVer, isAPIVer } from "../enum";
 const router = Router();
 
 router.get('/', (req, res) => {
+    console.log(`process id = ${process.pid}`);
     res.send("<h1>Welcome to ROOT!!</h1>");
 })
 
