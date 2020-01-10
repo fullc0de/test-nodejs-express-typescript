@@ -1,5 +1,4 @@
 import {Router} from "express";
-import postRouter from "./post-router";
 import fs from "fs";
 import * as path from "path";
 import makePostRouter from "./post-router";

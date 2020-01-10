@@ -2,10 +2,10 @@ import {Router} from "express";
 
 import makeExpressCallback from "../router-callback";
 import {createController} from "../controller";
-import {Resource} from "../enum";
+import {Resource, APIVer} from "../enum";
 import CommentControllerInterface from "../controller/interface/comment-controller-interface";
 
-function makeCommentRouter(version: string): Router {
+function makeCommentRouter(version: APIVer): Router {
     const commentRouter = Router({ mergeParams: true })
 
     createController(Resource.Comment, version, (controller) => {

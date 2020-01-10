@@ -2,11 +2,11 @@ import {Router} from "express";
 
 import makeExpressCallback from "../router-callback";
 import {createController} from "../controller";
-import {Resource} from "../enum";
+import {Resource, APIVer} from "../enum";
 import PostControllerInterface from "../controller/interface/post-controller-interface";
 import CommentControllerInterface from "../controller/interface/comment-controller-interface";
 
-function makePostRouter(version: string): Router {
+function makePostRouter(version: APIVer): Router {
     const postRouter = Router({ mergeParams: true })
 
     createController(Resource.Post, version, (controller) => {
