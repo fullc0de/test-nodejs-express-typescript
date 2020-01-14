@@ -1,5 +1,5 @@
 import { PostController } from "../post-controller"
-import { User } from "../../../model";
+import { Users } from "../../../model";
 import { getConnectionOptions, createConnections } from "typeorm";
 
 beforeAll(async () => {

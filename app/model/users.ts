@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { CommonEntity } from './common-entity';
 
 @Entity()
-export class User extends CommonEntity {
+export class Users extends CommonEntity {
 
     @Column({nullable: true})
     public firstName: string = ''
@@ -10,5 +10,6 @@ export class User extends CommonEntity {
     @Column({nullable: true})
     public lastName: string = ''
 
-    
+    @Column({nullable: true})
+    public address: string = ''
 }

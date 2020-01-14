@@ -1,10 +1,10 @@
 
-import { User } from './user';
+import { Users } from './users';
 import { Bar } from './bar';
 import { Foo } from './foo';
 
 export {
-    User,
-    Foo,
+    Users as Users,
+    Foo as Foo,
     Bar
 }

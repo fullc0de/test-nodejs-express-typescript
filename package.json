@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "local:ts": "tsc && NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
+    "local:ts": "NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
     "local": "tsc && NODE_ENV=local node ./build/index.js",
     "dev": "tsc && NODE_ENV=development npx pm2 start ./build/index.js -i 2 --name DEV_API --no-daemon --max-memory-restart 1G",
     "prod": "tsc && NODE_ENV=production npx pm2 start ./build/index.js -i 2 --name PROD_API --no-daemon --max-memory-restart 1G",
