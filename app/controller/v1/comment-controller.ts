@@ -7,7 +7,7 @@ export class CommentController extends BaseController implements CommentControll
     public async index(request: HttpRequest): Promise<HttpResponse> {
         return {
             statusCode: 200,
-            body: { message: "no comment" }
+            body: { message: "no comment at v1" }
         }
     }
 
