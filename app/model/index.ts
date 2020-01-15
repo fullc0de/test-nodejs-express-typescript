@@ -6,5 +6,5 @@ import { Foo } from './foo';
 export {
     Users as Users,
     Foo as Foo,
-    Bar
+    Bar as Bar
 }

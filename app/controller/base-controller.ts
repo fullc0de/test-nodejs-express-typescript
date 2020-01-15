@@ -1,13 +1,13 @@
+import validator from 'validator';
 import { Users } from "../model";
 import FacebookHelper from '../helper/facebook-helper';
 
 export default abstract class BaseController {
     public validateParamId(id: string): number | Error {
-        const converted = +id;
-        if (Number.isNaN(converted)) {
+        if (!validator.isInt(id)) {
             return new Error(`invalid resource parameter (${id})`);
         }
-        return converted;
+        return +id;
     }
 
     public async currentUser(token: string): Promise<Users | undefined> {
