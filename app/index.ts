@@ -27,6 +27,9 @@ const app: express.Application = express();
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
+
+    
+
     next();
 });
 
