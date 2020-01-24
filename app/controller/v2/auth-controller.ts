@@ -1,22 +1,21 @@
 import BaseController from '../base-controller';
 import AuthControllerInterface from '../interface/auth-controller-interface';
-import { HttpRequest, HttpResponse } from '../common-interfaces';
+import { HttpRequest, HttpResponse, Context } from '../common-interfaces';
 import { format } from 'path';
 
 export class AuthController extends BaseController implements AuthControllerInterface {
 
-    @Format("My name: %s")
+    @Format("My name = %s")
     public userName: string = "heath";
     
     @SkipAuth()
-    public async signup(request: HttpRequest): Promise<HttpResponse> {
-        console.log(`name = ${this.userName}`);
+    public async signup(ctx: Context) {
         let format = getFormat(this, "userName");
-        console.log(`format = [${format}]`);
-        return {
+
+        ctx.response = {
             statusCode: 500,
             body: { hello: format.replace("%s", this.userName) }
-        }
+        };
     }
 }
 
@@ -28,9 +27,14 @@ function SkipAuth() {
 }
 
 function Format(format: string) {
-    return Reflect.metadata(Symbol("Format"), format);
+    console.log(`Format designed: ${format}`);
+    return function (target: any, propertyKey: string) {
+        let metaKey = `property:${propertyKey}`;
+        Reflect.defineMetadata(metaKey, format, target, propertyKey);
+    };
 }
 
 function getFormat(target: any, propertyKey: string): string {
-    return Reflect.getMetadata(Symbol("Format"), target, propertyKey);
+    let metaKey = `property:${propertyKey}`;
+    return Reflect.getMetadata(metaKey, target, propertyKey);
 }

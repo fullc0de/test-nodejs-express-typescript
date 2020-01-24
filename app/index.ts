@@ -25,9 +25,14 @@ const app: express.Application = express();
 //     cb(null, null, null);
 // }));
 
+app.use("*", (req, res, next) => {
+    console.log("start preprocess...");
+    next();
+});
+
 app.use(router);
 
-app.use('*', (req, res, next) => {
+app.use("*", (req, res, next) => {
     res.status(404).send('NOT FOUND');
 });
 

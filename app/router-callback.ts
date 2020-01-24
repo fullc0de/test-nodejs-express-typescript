@@ -1,30 +1,37 @@
 import {Request, Response} from "express";
-import { RoutableFunction, HttpRequest } from "./controller/common-interfaces";
+import { RoutableFunction, HttpRequest, Context } from "./controller/common-interfaces";
 
-export default function makeExpressCallback(callback?: RoutableFunction): (req: Request, res: Response) => void {
+export default function makeRouteCallback(callback?: RoutableFunction): (req: Request, res: Response) => void {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"});
             return;
         }
 
-        const httpReq: HttpRequest = {
-            body: req.body,
-            query: req.query,
-            params: req.params,
-            headers: {
-                'Content-Type': req.get('Content-Type'),
-                Referer: req.get('referer'),
-                'User-Agent': req.get('User-Agent')
+        let context: Context = {
+            request: {
+                body: req.body,
+                query: req.query,
+                params: req.params,
+                headers: {
+                    'Content-Type': req.get('Content-Type'),
+                    Referer: req.get('referer'),
+                    'User-Agent': req.get('User-Agent')
+                }
             }
-        };
+        }
         try {
-            let httpRes = await callback(httpReq);
-            if (httpRes.headers) {
-                res.set(httpRes.headers);
+            await callback(context);
+
+            if (context.response !== undefined) {
+                if (context.response.headers !== undefined) {
+                    res.set(context.response.headers);
+                }
+                res.type('json');
+                res.status(context.response.statusCode).send(context.response.body);    
+            } else {
+                res.status(500).send({ error: `a response of a context is undefined`});
             }
-            res.type('json');
-            res.status(httpRes.statusCode).send(httpRes.body);
         } catch (e) {
             res.status(500).send({ error: `internal error has been occurred. (${e.message})`});
         }

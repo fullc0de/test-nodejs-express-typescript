@@ -1,3 +1,4 @@
+import { Response } from "express";
 
 interface ParamDict<T> { [key: string]: T };
 
@@ -14,11 +15,18 @@ interface HttpResponse {
     body: string | {}
 };
 
-type RoutableFunction = (request: HttpRequest) => Promise<HttpResponse>;
+interface Context {
+    request: HttpRequest
+    response?: HttpResponse
+    userId?: number
+}
+
+type RoutableFunction = (ctx: Context) => Promise<void>;
 
 export {
     ParamDict,
     HttpRequest,
     HttpResponse,
+    Context,
     RoutableFunction
 }
