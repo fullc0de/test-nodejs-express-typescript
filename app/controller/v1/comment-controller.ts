@@ -11,13 +11,15 @@ export class CommentController extends BaseController implements CommentControll
         }
     }
 
+    public testName: string = 'hello';
+
     public async show(request: HttpRequest): Promise<HttpResponse> {
         const commentId = super.validateParamId(request.params.id)
         return {
             statusCode: 200,
             body: {
                 id: commentId,
-                author: "Heath Hwang",
+                author: `${this.testName}`,
                 message: "Good job!!"
             }
         }

@@ -3,6 +3,8 @@ import { Users } from "../model";
 import FacebookHelper from '../helper/facebook-helper';
 
 export default abstract class BaseController {
+    public superName: string = 'super';
+
     public validateParamId(id: string): number | Error {
         if (!validator.isInt(id)) {
             return new Error(`invalid resource parameter (${id})`);
