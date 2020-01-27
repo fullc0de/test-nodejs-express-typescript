@@ -1,12 +1,14 @@
 import BaseController from '../base-controller';
 import AuthControllerInterface from '../interface/auth-controller-interface';
 import { HttpRequest, HttpResponse, Context } from '../common-interfaces';
+import { Route } from '../../decorator/route';
 
 export class AuthController extends BaseController implements AuthControllerInterface {
 
     @Format("My name = %s")
     public userName: string = "heath";
     
+    @Route('signup')
     @SkipAuth()
     public async signup(ctx: Context) {
         let format = getFormat(this, "userName");
