@@ -2,8 +2,7 @@ import validator from 'validator';
 import { Users } from "../model";
 import FacebookHelper from '../helper/facebook-helper';
 
-export default abstract class BaseController {
-    public superName: string = 'super';
+export default class BaseController {
 
     public validateParamId(id: string): number | Error {
         if (!validator.isInt(id)) {

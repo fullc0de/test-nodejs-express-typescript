@@ -1,6 +1,8 @@
 import { PostController as V1 } from "../v1/post-controller";
-import {HttpRequest, HttpResponse, Context} from "../common-interfaces";
+import {Context} from "../common-interfaces";
+import { Route } from '../../decorator/route';
 
+@Route('posts')
 export class PostController extends V1 {
     public async index(ctx: Context) {
 

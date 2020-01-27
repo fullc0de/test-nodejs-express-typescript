@@ -1,9 +1,11 @@
 import {HttpRequest, HttpResponse, Context} from "../common-interfaces";
 import BaseController from "../base-controller";
-import CommentControllerInterface from "../interface/comment-controller-interface";
+import ControllerInterface from "../interface/controller-interface";
+import { Route } from "../../decorator/route";
 
-export class CommentController extends BaseController implements CommentControllerInterface {
-
+@Route("comments")
+export class CommentController extends BaseController implements ControllerInterface {
+    
     public async index(ctx: Context) {
 
         ctx.response = {

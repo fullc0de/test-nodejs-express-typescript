@@ -1,20 +1,18 @@
 import {Router} from "express";
 
-import makeRouteCallback from "../router-callback";
-import {createController} from "../controller";
-import {Resource, APIVer} from "../enum";
-import AuthControllerInterface from "../controller/interface/auth-controller-interface";
-import { bind } from "../util";
+// import makeRouteCallback from "../router-callback";
+// import {createController} from "../controller";
+// import {Resource, APIVer} from "../enum";
+// import { bind } from "../util";
 
-export default function makeAuthRouter(version: APIVer): Router {
-    const authRouter = Router({ mergeParams: true });
+// export default function makeAuthRouter(version: APIVer): Router {
+//     const authRouter = Router({ mergeParams: true });
 
-    createController(Resource.Auth, version, (controller) => {
-        if (controller != null) {
-            const ai = controller as AuthControllerInterface;
-            authRouter.get('/signup', makeRouteCallback(bind(ai, ai.signup)));
-        }
-    });
+//     createController(Resource.SignUp, version, (controller) => {
+//         if (controller != null) {
+//             authRouter.get('/', makeRouteCallback(bind(controller, controller.index)));
+//         }
+//     });
 
-    return authRouter;
-}
+//     return authRouter;
+// }

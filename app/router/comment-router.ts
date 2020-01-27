@@ -1,25 +1,21 @@
 import {Router} from "express";
 
-import makeRouteCallback from "../router-callback";
-import {createController} from "../controller";
-import {Resource, APIVer} from "../enum";
-import CommentControllerInterface from "../controller/interface/comment-controller-interface";
-import { bind } from '../util';
+// import makeRouteCallback from "../router-callback";
+// import {createController} from "../controller";
+// import {Resource, APIVer} from "../enum";
+// import { bind } from '../util';
 
-function makeCommentRouter(version: APIVer): Router {
-    const commentRouter = Router({ mergeParams: true })
+// function makeCommentRouter(version: APIVer): Router {
+//     const commentRouter = Router({ mergeParams: true })
 
-    createController(Resource.Comment, version, (controller) => {
-        if (controller) {
-            const ci = controller as CommentControllerInterface
-            //commentRouter.get('/', makeRouteCallback(bind(ci, ci.index)))
-            commentRouter.get('/', makeRouteCallback(bind(ci, ci.index)))
-            commentRouter.get('/test', makeRouteCallback(bind(ci, ci.test)))
-            commentRouter.get('/:id', makeRouteCallback(bind(ci, ci.show)))
-        }
-    })
+//     createController(Resource.Comment, version, (controller) => {
+//         if (controller) {
+//             commentRouter.get('/', makeRouteCallback(bind(controller, controller.index)))
+//             commentRouter.get('/:id', makeRouteCallback(bind(controller, controller.show)))
+//         }
+//     })
 
-    return commentRouter
-}
+//     return commentRouter
+// }
 
-export default makeCommentRouter
+// export default makeCommentRouter
