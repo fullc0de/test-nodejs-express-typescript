@@ -1,7 +1,6 @@
 import BaseController from '../base-controller';
 import AuthControllerInterface from '../interface/auth-controller-interface';
 import { HttpRequest, HttpResponse, Context } from '../common-interfaces';
-import { format } from 'path';
 
 export class AuthController extends BaseController implements AuthControllerInterface {
 
@@ -21,8 +20,20 @@ export class AuthController extends BaseController implements AuthControllerInte
 
 function SkipAuth() {
     console.log("SkipAuth: evaluated!");
-    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        console.log(`SkipAuth: called, target=${target}, propertyKey=${propertyKey}, descriptor=${descriptor}`);
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+//        console.log(`SkipAuth: called, target=${target}, propertyKey=${propertyKey}, descriptor=${descriptor}`);
+
+        let method = descriptor.value;
+
+        console.log("change method!");
+        descriptor.value = function (...args: any[]) {
+            args.map(a => JSON.stringify(a)).forEach(j => console.log(`j = ${j}`));
+            
+            const result = method.apply(this, args);
+            return result;
+        }
+
+        return descriptor;
     }
 }
 

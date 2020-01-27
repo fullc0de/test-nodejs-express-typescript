@@ -1,7 +1,6 @@
-import {Request, Response} from "express";
-import { RoutableFunction, HttpRequest, Context } from "./controller/common-interfaces";
+import { RoutableFunction, Context, ExpressFunction } from "./controller/common-interfaces";
 
-export default function makeRouteCallback(callback?: RoutableFunction): (req: Request, res: Response) => void {
+export default function makeRouteCallback(callback?: RoutableFunction): ExpressFunction {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"});
