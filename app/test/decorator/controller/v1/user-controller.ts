@@ -1,7 +1,9 @@
 import ControllerInterface from '../../../../controller/interface/controller-interface';
 import { Context } from '../../../../controller/common-interfaces';
+import { Route } from '../../../../decorator/route';
 
-class UserController implements ControllerInterface {
+@Route("users")
+export class UserController implements ControllerInterface {
     public async index(ctx: Context) {
         ctx.response = {
             statusCode: 200,

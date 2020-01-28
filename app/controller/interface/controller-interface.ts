@@ -1,18 +1,18 @@
 import {RoutableFunction} from "../common-interfaces";
 
 export default interface ControllerInterface {
-    // '/'
+    // get '/'
     index?: RoutableFunction;
 
-    // '/:id'
+    // get '/:id'
     show?: RoutableFunction;
 
-    // put
+    // put ':id'
     put?: RoutableFunction;
 
-    // post
+    // post '/'
     post?: RoutableFunction;
 
-    // delete
+    // delete ':id'
     delete?: RoutableFunction;
 };

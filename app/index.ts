@@ -1,6 +1,7 @@
 import express from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
 import { buildRouter } from "./router";
+import * as path from 'path';
 
 const app: express.Application = express();
 
@@ -33,7 +34,9 @@ app.use("*", (req, res, next) => {
     next();
 });
 
-app.use(buildRouter('api'));
+const controllerPath = path.join(__dirname, 'controller');
+
+app.use(buildRouter('api', controllerPath));
 
 app.use("*", (req, res, next) => {
     res.status(404).send('NOT FOUND');

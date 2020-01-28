@@ -14,8 +14,6 @@ export class CommentController extends BaseController implements ControllerInter
         };
     }
 
-    public testName: string = 'hello';
-
     public async show(ctx: Context) {
         const commentId = super.validateParamId(ctx.request.params.id);
 
@@ -23,7 +21,7 @@ export class CommentController extends BaseController implements ControllerInter
             statusCode: 200,
             body: {
                 id: commentId,
-                author: `${this.testName}`,
+                author: "kyokook",
                 message: "Good job!!"
             }
         };

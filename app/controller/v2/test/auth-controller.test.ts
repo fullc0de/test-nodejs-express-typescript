@@ -1,7 +1,7 @@
-import { AuthController } from '../auth-controller';
+import { SignUpController } from '../signup-controller';
 
-describe('AuthController V2', () => {
-    let controller = new AuthController();
+describe('SignUpController V2', () => {
+    let controller = new SignUpController();
 
     describe('- check validation: post_id', () => {
         it('should return true', () => {

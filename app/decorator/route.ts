@@ -2,10 +2,11 @@ import getCallerFile from 'get-caller-file';
 import * as sysPath from "path";
 import { getStore } from '../metadata/index';
 import { APIVer } from '../enum';
+import ControllerInterface from '../controller/interface/controller-interface';
 
-export function Route(path: string) {
+export function Route<T extends ControllerInterface & Function>(path: string) {
     console.log(`Route deco called: path = ${path}`);
-    return function (target: Function) {
+    return function (target: T) {
         const modulePath: string = getCallerFile(4);
         console.log(`Route deco evaluated: caller_dirpath = '${modulePath}', path = '${path}', module_name = '${target.name}'`);
         const ver = <APIVer>modulePath.split(sysPath.sep).slice(-2, -1)[0];

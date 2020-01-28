@@ -1,17 +1,20 @@
 import { APIVer, prevVer } from "../enum";
 import { RoutableFunction } from "../controller/common-interfaces";
 import ControllerInterface from '../controller/interface/controller-interface';
-import assert from "assert";
+import * as _ from "lodash";
+
 
 interface RouteMetadataInterface {
     version: APIVer,
     path: string, 
-    ctor: any
+    ctor: any,
+    handlers: ControllerInterface
 }
 
 export interface RouteInfo {
+    method: "get"|"post"|"put"|"delete",
     path: string,
-    controller: ControllerInterface
+    handler: RoutableFunction
 }
 
 export class MetadataStorage {
@@ -21,15 +24,29 @@ export class MetadataStorage {
     public registerRoute(path: string, version: APIVer, ctor: any) {
         this.routes.push({
             version: version,
+            path: path,
             ctor: ctor,
-            path: path
+            handlers: {
+                index: ctor.prototype?.index,
+                show: ctor.prototype?.show,
+                post: ctor.prototype?.post,
+                put: ctor.prototype?.put,
+                delete: ctor.prototype?.delete
+            }
         });
     }
     
     public buildRoutes(prefix?: string): RouteInfo[] {
         let sortedRoutes = this.routes
-        .sort((a, b) => a.version > b.version ? 1 : -1)
-        .sort((a, b) => a.path > b.path ? -1 : 1);
+        .sort((a, b) => {
+            if (a.version > b.version) {
+                return 1;
+            } else if (a.version < b.version) {
+                return -1;
+            } else {
+                return a.path < b.path ? 1 : -1;
+            }
+        });
 
         let versionMap: { [version: string]: RouteMetadataInterface[] } = {};
 
@@ -40,7 +57,7 @@ export class MetadataStorage {
                 if (prev) {
                     let prevPaths = versionMap[prev];
                     if (prevPaths) {
-                        targetPaths = Object.assign([], prevPaths);
+                        targetPaths = prevPaths.map((r) => _.cloneDeep(r));
                         targetPaths = targetPaths.filter((r) => r.path !== route.path);
                         targetPaths.forEach((r) => {
                             r.version = route.version;
@@ -52,18 +69,60 @@ export class MetadataStorage {
                     targetPaths = [];
                 }
             }
-    
+            
             targetPaths.push(route);
             versionMap[route.version] = targetPaths;
         });
 
+        // versionMap["v1"].forEach((r) => console.log(`v1 [${r.path}] index handler = ${r.handlers.index}`));
+        // versionMap["v2"].forEach((r) => console.log(`v2 [${r.path}] index handler = ${r.handlers.index}`));
+
         let routeInfos: RouteInfo[] = [];
         for(let key in versionMap) {
+            let pathPrefix = "/";
+            if (prefix) {
+                pathPrefix += prefix;
+            }
             versionMap[key].forEach((route) => {
-                routeInfos.push({
-                    path: `${prefix != null ? prefix : ''}/${route.version}/${route.path}`,
-                    controller: route.ctor
-                })
+                if (route.handlers.index) {
+                    routeInfos.push({
+                        method: "get",
+                        path: `${pathPrefix}/${route.version}/${route.path}`,
+                        handler: route.handlers.index
+                    })    
+                }
+
+                if (route.handlers.show) {
+                    routeInfos.push({
+                        method: "get",
+                        path: `${pathPrefix}/${route.version}/${route.path}/:id`,
+                        handler: route.handlers.show
+                    })    
+                }
+
+                if (route.handlers.post) {
+                    routeInfos.push({
+                        method: "post",
+                        path: `${pathPrefix}/${route.version}/${route.path}`,
+                        handler: route.handlers.post
+                    })    
+                }
+
+                if (route.handlers.put) {
+                    routeInfos.push({
+                        method: "put",
+                        path: `${pathPrefix}/${route.version}/${route.path}/:id`,
+                        handler: route.handlers.put
+                    })    
+                }
+
+                if (route.handlers.delete) {
+                    routeInfos.push({
+                        method: "delete",
+                        path: `${pathPrefix}/${route.version}/${route.path}/:id`,
+                        handler: route.handlers.delete
+                    })    
+                }
             })
         }
 
