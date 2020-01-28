@@ -1,17 +1,11 @@
 import "reflect-metadata";
+
 import {Router} from "express";
 import fs from "fs";
 import * as path from 'path';
-// import makePostRouter from "./post-router";
-// import makeCommentRouter from "./comment-router";
-// import makeAuthRouter from './auth-router';
-import { APIVer, isAPIVer, prevVer } from "../enum";
+import { isAPIVer } from "../enum";
 import { getStore } from '../metadata/index';
-import ControllerInterface from '../controller/interface/controller-interface';
 import makeRouteCallback from '../router-callback';
-import { bind } from '../util';
-
-type RouteMap = { [version: string]: { ctor: any, path: string }[] };
 
 function buildRouter(prefix: string, controllerBasePath: string): Router {
     const router = Router();
