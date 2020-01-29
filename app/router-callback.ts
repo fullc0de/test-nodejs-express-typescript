@@ -1,4 +1,4 @@
-import { RoutableFunction, Context, ExpressFunction } from "./controller/common-interfaces";
+import { RoutableFunction, Context, ExpressFunction } from "./common/common-interfaces";
 
 export default function makeRouteCallback(callback?: RoutableFunction): ExpressFunction {
     return async (req, res) => {
@@ -32,7 +32,7 @@ export default function makeRouteCallback(callback?: RoutableFunction): ExpressF
                 res.status(500).send({ error: `a response of a context is undefined`});
             }
         } catch (e) {
-            res.status(500).send({ error: `internal error has been occurred. (${e.message})`});
+            res.status(500).send({ error: `${e.message}`});
         }
     };
 }

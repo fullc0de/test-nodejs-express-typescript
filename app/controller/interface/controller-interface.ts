@@ -1,4 +1,4 @@
-import {RoutableFunction} from "../common-interfaces";
+import {RoutableFunction} from "../../common/common-interfaces";
 
 export default interface ControllerInterface {
     // get '/'

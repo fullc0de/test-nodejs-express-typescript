@@ -1,6 +1,5 @@
-import ControllerInterface from '../../controller/interface/controller-interface';
-import { Context } from '../../controller/common-interfaces';
-import { MetadataStorage } from '../../metadata/metadata-storage';
+import { MetadataStorage } from '../../app/metadata/metadata-storage';
+import { Context } from '../../app/common/common-interfaces';
 
 class UserV1 {
     index(ctx: Context) {}

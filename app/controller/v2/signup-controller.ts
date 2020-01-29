@@ -1,10 +1,29 @@
 import BaseController from '../base-controller';
 import ControllerInterface from '../interface/controller-interface';
-import { Context } from '../common-interfaces';
-import { Route, SkipAuth } from '../../decorator/route';
+import { Context } from '../../common/common-interfaces';
+import { Route } from '../../decorator/route';
+import { getConnection } from 'typeorm';
+import { Users } from '../../model/users';
+import InternalError from '../../common/interal-error';
 
 @Route('signup')
 export class SignUpController extends BaseController implements ControllerInterface {
+
+    public async show(ctx: Context) {
+        const repo = getConnection().getRepository(Users);
+        const user = await repo.findOne(ctx.request.params.id);
+        if (user == null) {
+            throw new InternalError("failed to find a user");
+        }
+        
+        user.dummy = "hello";
+
+        ctx.response = {
+            statusCode: 200,
+            body: user
+        };
+    }
+
 
     public async put(ctx: Context) {
         ctx.response = {

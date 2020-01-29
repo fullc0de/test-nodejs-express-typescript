@@ -1,4 +1,4 @@
-import { getStore } from '../../metadata/index';
+import { getStore } from '../../app/metadata/index';
 
 describe('metadata > storage', () => {
     it('should make proper routing information with input ', () => {

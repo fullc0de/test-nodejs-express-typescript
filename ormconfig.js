@@ -11,10 +11,10 @@ module.exports = [{
     "type": "postgres",
     "url": process.env.POSTGRES_URL,
     "entities": [
-        "build/model/**/*.js"
+        "build/app/model/**/*.js"
     ],
     "migrations": [
-        "build/migration/**/*.js"
+        "build/app/migration/**/*.js"
     ],
     "cli": {
         "entitiesDir": "app/model",

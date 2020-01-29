@@ -4,6 +4,7 @@ exports[`PostController V1 - check functionality of base controller get current 
 Users {
   "address": "verve",
   "createdAt": 2020-01-14T21:48:50.862Z,
+  "dummy": "dummy",
   "firstName": "hwang",
   "id": 1,
   "lastName": "kyokook",
