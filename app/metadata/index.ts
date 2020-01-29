@@ -1,9 +1,11 @@
-import { MetadataStorage } from "./metadata-storage";
+import { MetadataStorage } from './metadata-storage';
+
+let metadataStorage: MetadataStorage | undefined;
 
 export function getStore(): MetadataStorage {
-    const globalScope: any = global;
-    if (!globalScope.metadataStorage)
-        globalScope.metadataStorage = new MetadataStorage();
-
-    return globalScope.metadataStorage;
+    if (metadataStorage) {
+        return metadataStorage;
+    }
+    metadataStorage = new MetadataStorage();
+    return metadataStorage;
 }
