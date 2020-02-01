@@ -1,6 +1,6 @@
-import { RoutableFunction, Context, ExpressFunction } from "./common/common-interfaces";
+import { RoutableFunction, ExpressFunction, Context } from './interface/common-interfaces';
 
-export default function makeRouteCallback(callback?: RoutableFunction): ExpressFunction {
+export default function makeExpressRoute(callback?: RoutableFunction, beforeCallback?: (ctx: Context) => void, afterCallback?: (ctx: Context) => void): ExpressFunction {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"});
@@ -20,7 +20,16 @@ export default function makeRouteCallback(callback?: RoutableFunction): ExpressF
             }
         }
         try {
+
+            if (beforeCallback) {
+                beforeCallback(context);
+            }
+
             await callback(context);
+
+            if (afterCallback) {
+                afterCallback(context);
+            }
 
             if (context.response !== undefined) {
                 if (context.response.headers !== undefined) {

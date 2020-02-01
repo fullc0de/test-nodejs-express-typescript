@@ -1,5 +1,5 @@
 import { PostController as V1 } from "../v1/post-controller";
-import {Context} from "../../common/common-interfaces";
+import {Context} from "../../decorator/interface/common-interfaces";
 import { Route } from '../../decorator/route';
 
 @Route("posts", "v2")

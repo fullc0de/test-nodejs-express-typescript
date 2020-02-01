@@ -1,8 +1,10 @@
 import 'reflect-metadata';
 import express from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
-import { buildRouter } from "./router";
+import { buildRouter } from "./decorator";
 import * as path from 'path';
+import { registerTokenAuth } from './decorator/index';
+import { JwtAuthDecoService } from './deco-service/jwt-auth-deco-service';
 
 const app: express.Application = express();
 
@@ -18,14 +20,7 @@ const app: express.Application = express();
     console.log(e);
 });
 
-// passport.use(new facebookPassport.Strategy({
-//     clientID: '700863590736873',
-//     clientSecret: 'ec94fb04903e57eb8ce0d4fdcf7553fd',
-//     callbackURL: 'http://localhost:3000/auth/facebook/callback'
-// }, (token, refToken, profile, cb) => {
-//     console.log(`token = ${token}, userid = ${profile.id}`);
-//     cb(null, null, null);
-// }));
+registerTokenAuth(new JwtAuthDecoService("hello key"));
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
@@ -36,7 +31,6 @@ app.use("*", (req, res, next) => {
 });
 
 const controllerPath = path.join(__dirname, 'controller');
-
 app.use(buildRouter('api', controllerPath));
 
 app.use("*", (req, res, next) => {

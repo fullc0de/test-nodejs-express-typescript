@@ -1,13 +1,12 @@
-import "reflect-metadata";
-
 import {Router} from "express";
 import fs from "fs";
 import * as path from 'path';
 import { isAPIVer } from "../enum";
 import { getStore } from '../metadata/index';
-import makeRouteCallback from '../router-callback';
+import makeExpressRoute from './express-router';
+import { TokenAutoInterface } from './interface/service-interface';
 
-function buildRouter(prefix: string, controllerBasePath: string): Router {
+export function buildRouter(prefix: string, controllerBasePath: string): Router {
     const router = Router();
 
     router.get('/', (req, res) => {
@@ -27,16 +26,16 @@ function buildRouter(prefix: string, controllerBasePath: string): Router {
     pathInfos.forEach((info) => {
         switch (info.method) {
             case "get":
-                router.get(info.path, makeRouteCallback(info.handler));
+                router.get(info.path, makeExpressRoute(info.handler));
                 break;
             case "post":
-                router.post(info.path, makeRouteCallback(info.handler));
+                router.post(info.path, makeExpressRoute(info.handler));
                 break;
             case "put":
-                router.put(info.path, makeRouteCallback(info.handler));
+                router.put(info.path, makeExpressRoute(info.handler));
                 break;
             case "delete":
-                router.delete(info.path, makeRouteCallback(info.handler));
+                router.delete(info.path, makeExpressRoute(info.handler));
                 break;
         }
     });
@@ -44,9 +43,11 @@ function buildRouter(prefix: string, controllerBasePath: string): Router {
     return router;
 }
 
-
-
-export {
-    buildRouter
+let tokenAuthService: TokenAutoInterface | undefined = undefined;
+export function registerTokenAuth(service: TokenAutoInterface) {
+    tokenAuthService = service;
 }
 
+export function getTokenAuthService(): TokenAutoInterface | undefined {
+    return tokenAuthService;
+}

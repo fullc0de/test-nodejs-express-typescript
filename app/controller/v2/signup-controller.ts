@@ -1,6 +1,6 @@
 import BaseController from '../base-controller';
-import ControllerInterface from '../interface/controller-interface';
-import { Context } from '../../common/common-interfaces';
+import { ControllerInterface } from '../../decorator/interface/controller-interface';
+import { Context } from '../../decorator/interface/common-interfaces';
 import { Route } from '../../decorator/route';
 import { getConnection } from 'typeorm';
 import { Users } from '../../model/users';

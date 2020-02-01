@@ -1,6 +1,6 @@
 import { APIVer, prevVer } from "../enum";
-import { RoutableFunction } from "../common/common-interfaces";
-import ControllerInterface from '../controller/interface/controller-interface';
+import { RoutableFunction } from "../decorator/interface/common-interfaces";
+import { ControllerInterface } from '../decorator/interface/controller-interface';
 import * as _ from "lodash";
 
 

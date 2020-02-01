@@ -1,5 +1,5 @@
-import ControllerInterface from '../../../../app/controller/interface/controller-interface';
-import { Context } from '../../../../app/common/common-interfaces';
+import { ControllerInterface } from '../../../../app/decorator/interface/controller-interface';
+import { Context } from '../../../../app/decorator/interface/common-interfaces';
 import { Route } from '../../../../app/decorator/route';
 
 @Route("posts", "v1")

@@ -1,6 +1,6 @@
-import {HttpRequest, HttpResponse, Context} from "../../common/common-interfaces";
+import {Context} from "../../decorator/interface/common-interfaces";
 import BaseController from "../base-controller";
-import ControllerInterface from "../interface/controller-interface";
+import { ControllerInterface } from "../../decorator/interface/controller-interface";
 import { Route } from "../../decorator/route";
 
 @Route("comments", "v1")

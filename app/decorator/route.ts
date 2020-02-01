@@ -1,8 +1,7 @@
 import getCallerFile from 'get-caller-file';
-import * as sysPath from "path";
 import { getStore } from '../metadata/index';
-import { APIVer, isAPIVer } from '../enum';
-import ControllerInterface from '../controller/interface/controller-interface';
+import { isAPIVer } from '../enum';
+import { ControllerInterface } from './interface/controller-interface';
 
 export function Route<T extends ControllerInterface & Function>(path: string, version: string) {
 //    console.log(`Route deco called: path = ${path}`);

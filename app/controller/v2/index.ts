@@ -2,7 +2,7 @@ import {Resource} from "../../enum";
 import { PostController } from "./post-controller";
 import { SignUpController } from './signup-controller';
 import { load as loadV1 } from '../v1/index';
-import ControllerInterface from '../interface/controller-interface';
+import { ControllerInterface } from '../../decorator/interface/controller-interface';
 
 // export default function v2Controller(resource: Resource): ControllerInterface | undefined {
 //     switch (resource) {

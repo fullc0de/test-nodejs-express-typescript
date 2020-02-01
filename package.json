@@ -6,13 +6,13 @@
   "scripts": {
     "tsc": "tsc",
     "local:ts": "NODE_ENV=local ts-node-dev --respawn --transpileOnly ./app/index.ts",
-    "local": "tsc && NODE_ENV=local node ./build/app/index.js",
+    "local": "rm -rf ./build && tsc && NODE_ENV=local node ./build/app/index.js",
     "dev": "tsc && NODE_ENV=development npx pm2 start ./build/app/index.js -i 2 --name DEV_API --no-daemon --max-memory-restart 1G",
     "prod": "tsc && NODE_ENV=production npx pm2 start ./build/app/index.js -i 2 --name PROD_API --no-daemon --max-memory-restart 1G",
     "console": "tsc && NODE_ENV=local node --experimental-repl-await -i -r ./build/app/index.js",
-    "typeorm": "tsc && NODE_ENV=production ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "typeorm:dev": "tsc && NODE_ENV=development ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "typeorm:local": "tsc && NODE_ENV=local ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
+    "typeorm": "rm -rf ./build && tsc && NODE_ENV=production ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
+    "typeorm:dev": "rm -rf ./build && tsc && NODE_ENV=development ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
+    "typeorm:local": "rm -rf ./build && tsc && NODE_ENV=local ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "test": "jest"
   },
   "author": "",

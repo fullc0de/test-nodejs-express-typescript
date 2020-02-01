@@ -1,6 +1,7 @@
-import {RoutableFunction} from "../../common/common-interfaces";
+import { RoutableFunction } from "./common-interfaces";
 
-export default interface ControllerInterface {
+
+export interface ControllerInterface {
     // get '/'
     index?: RoutableFunction;
 

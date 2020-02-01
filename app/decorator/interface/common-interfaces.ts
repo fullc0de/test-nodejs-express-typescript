@@ -1,4 +1,3 @@
-import { Response, Request } from "express";
 
 interface ParamDict<T> { [key: string]: T };
 
@@ -21,7 +20,7 @@ interface Context {
     userId?: number
 }
 
-type ExpressFunction = (req: Request, res: Response) => void;
+type ExpressFunction = (req: any, res: any) => void;
 type RoutableFunction = (ctx: Context) => Promise<void>;
 
 export {
