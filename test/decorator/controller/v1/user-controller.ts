@@ -2,7 +2,7 @@ import ControllerInterface from '../../../../app/controller/interface/controller
 import { Context } from '../../../../app/common/common-interfaces';
 import { Route } from '../../../../app/decorator/route';
 
-@Route("users")
+@Route("users", "v1")
 export class UserController implements ControllerInterface {
     public async index(ctx: Context) {
         ctx.response = {

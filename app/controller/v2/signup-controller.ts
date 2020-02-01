@@ -6,7 +6,7 @@ import { getConnection } from 'typeorm';
 import { Users } from '../../model/users';
 import InternalError from '../../common/internal-error';
 
-@Route('signup')
+@Route("signup", "v2")
 export class SignUpController extends BaseController implements ControllerInterface {
 
     public async show(ctx: Context) {

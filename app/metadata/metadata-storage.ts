@@ -58,7 +58,6 @@ export class MetadataStorage {
                     let prevPaths = versionMap[prev];
                     if (prevPaths) {
                         targetPaths = prevPaths.map((r) => _.cloneDeep(r));
-                        targetPaths = targetPaths.filter((r) => r.path !== route.path);
                         targetPaths.forEach((r) => {
                             r.version = route.version;
                         });
@@ -69,8 +68,13 @@ export class MetadataStorage {
                     targetPaths = [];
                 }
             }
+            const foundIndex = targetPaths.findIndex((r) => r.path === route.path);
+            if (foundIndex !== -1) {
+                targetPaths[foundIndex] = route;
+            } else {
+                targetPaths.push(route);
+            }
             
-            targetPaths.push(route);
             versionMap[route.version] = targetPaths;
         });
 

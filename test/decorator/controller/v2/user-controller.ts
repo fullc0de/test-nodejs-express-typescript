@@ -3,7 +3,7 @@ import { Context } from '../../../../app/common/common-interfaces';
 import { Route } from '../../../../app/decorator/route';
 import { UserController as V1 } from '../v1/user-controller';
 
-@Route("users")
+@Route("users", "v2")
 export class UserController extends V1 implements ControllerInterface {
     public async index(ctx: Context) {
         ctx.response = {

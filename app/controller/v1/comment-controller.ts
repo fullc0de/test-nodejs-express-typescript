@@ -3,7 +3,7 @@ import BaseController from "../base-controller";
 import ControllerInterface from "../interface/controller-interface";
 import { Route } from "../../decorator/route";
 
-@Route("comments")
+@Route("comments", "v1")
 export class CommentController extends BaseController implements ControllerInterface {
     
     public async index(ctx: Context) {
