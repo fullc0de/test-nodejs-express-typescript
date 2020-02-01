@@ -1,4 +1,4 @@
-import FacebookHelper from '../facebook-helper';
+import FacebookHelper from '../../app/helper/facebook-helper';
 
 describe('Facebook Helper', () => {
     let helper = new FacebookHelper('v5.0', 'EAAJ9boVcoZBkBACowZA6VDyUJZAsmr73uQdqlG6LfWBT4wZB1BK18EGsETscnWrMw05KP4oulYaZB2JZACKZB4708fDMpM8tVtV4TpyOJdDkzSypgvWwuikRx1imE30HHlfAZBUytOzdu76ZCNMswdva7z3IQPlZCHFWoCmnoDAGZCatAZDZD');

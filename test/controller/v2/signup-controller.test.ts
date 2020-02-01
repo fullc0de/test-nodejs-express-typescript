@@ -1,4 +1,4 @@
-import { SignUpController } from '../signup-controller';
+import { SignUpController } from '../../../app/controller/v2/signup-controller';
 
 describe('SignUpController V2', () => {
     let controller = new SignUpController();

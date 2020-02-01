@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
 import { buildRouter } from "./router";
@@ -37,6 +38,7 @@ app.use("*", (req, res, next) => {
 const controllerPath = path.join(__dirname, 'controller');
 
 app.use(buildRouter('api', controllerPath));
+//app.use(buildRouter('api/stale', controllerPath));
 
 app.use("*", (req, res, next) => {
     res.status(404).send('NOT FOUND');

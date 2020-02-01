@@ -8,7 +8,7 @@ export function Route<T extends ControllerInterface & Function>(path: string) {
 //    console.log(`Route deco called: path = ${path}`);
     return function (target: T) {
         const modulePath: string = getCallerFile(4);
-//        console.log(`Route deco evaluated: caller_dirpath = '${modulePath}', path = '${path}', module_name = '${target.name}'`);
+        console.log(`Route deco evaluated: caller_dirpath = '${modulePath}', path = '${path}', module_name = '${target.name}'`);
         const ver = <APIVer>modulePath.split(sysPath.sep).slice(-2, -1)[0];
         getStore().registerRoute(path, ver, target);
     }

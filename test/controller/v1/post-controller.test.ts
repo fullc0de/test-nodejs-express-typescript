@@ -1,5 +1,5 @@
-import { PostController } from "../post-controller"
-import { createConnections } from "typeorm";
+import { PostController } from "../../../app/controller/v1/post-controller"
+import { createConnections } from 'typeorm';
 
 beforeAll(async () => {
     return (async () => {
@@ -8,7 +8,7 @@ beforeAll(async () => {
             "type": "postgres",
             "url": 'postgres://postgres:123456@127.0.0.1/test',
             "entities": [
-                "build/model/**/*.js"
+                "build/app/model/**/*.js"
             ],
             "synchronize": false,
         },{

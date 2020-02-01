@@ -4,7 +4,7 @@ import { Context } from '../../common/common-interfaces';
 import { Route } from '../../decorator/route';
 import { getConnection } from 'typeorm';
 import { Users } from '../../model/users';
-import InternalError from '../../common/interal-error';
+import InternalError from '../../common/internal-error';
 
 @Route('signup')
 export class SignUpController extends BaseController implements ControllerInterface {
