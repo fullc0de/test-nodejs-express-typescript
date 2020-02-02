@@ -17,11 +17,12 @@ interface HttpResponse {
 interface Context {
     request: HttpRequest
     response?: HttpResponse
-    userId?: number
+    additional: ParamDict<any>
 }
 
 type ExpressFunction = (req: any, res: any) => void;
 type RoutableFunction = (ctx: Context) => Promise<void>;
+type InjectableFunction = (ctx: Context) => Promise<void>;
 
 export {
     ParamDict,
@@ -29,5 +30,6 @@ export {
     HttpResponse,
     Context,
     ExpressFunction,
-    RoutableFunction
+    RoutableFunction,
+    InjectableFunction
 }

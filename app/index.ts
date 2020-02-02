@@ -3,8 +3,9 @@ import express from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
 import { buildRouter } from "./decorator";
 import * as path from 'path';
-import { registerTokenAuth } from './decorator/index';
-import { JwtAuthDecoService } from './deco-service/jwt-auth-deco-service';
+import { registerBeforeInjectors, registerAfterInjectors } from './decorator/index';
+import { JwtAuthDecoInjector } from './deco-injector/jwt-auth-deco-injector';
+import { LogDecoInjector } from './deco-injector/log-deco-injector';
 
 const app: express.Application = express();
 
@@ -20,13 +21,16 @@ const app: express.Application = express();
     console.log(e);
 });
 
-registerTokenAuth(new JwtAuthDecoService("hello key"));
+registerBeforeInjectors([
+    new JwtAuthDecoInjector("hello key")
+]);
+
+registerAfterInjectors([
+    new LogDecoInjector()
+]);
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
-
-    
-
     next();
 });
 

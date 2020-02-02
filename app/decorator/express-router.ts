@@ -1,6 +1,6 @@
-import { RoutableFunction, ExpressFunction, Context } from './interface/common-interfaces';
+import { RoutableFunction, ExpressFunction, Context, InjectableFunction } from './interface/common-interfaces';
 
-export default function makeExpressRoute(callback?: RoutableFunction, beforeCallback?: (ctx: Context) => void, afterCallback?: (ctx: Context) => void): ExpressFunction {
+export default function makeExpressRoute(callback?: RoutableFunction, beforeCallback?: InjectableFunction, afterCallback?: InjectableFunction): ExpressFunction {
     return async (req, res) => {
         if (callback === undefined) {
             res.status(500).send({ error: "No routing function defined"});
@@ -17,18 +17,19 @@ export default function makeExpressRoute(callback?: RoutableFunction, beforeCall
                     Referer: req.get('referer'),
                     'User-Agent': req.get('User-Agent')
                 }
-            }
+            },
+            additional: {}
         }
         try {
 
             if (beforeCallback) {
-                beforeCallback(context);
+                await beforeCallback(context);
             }
 
             await callback(context);
 
             if (afterCallback) {
-                afterCallback(context);
+                await afterCallback(context);
             }
 
             if (context.response !== undefined) {

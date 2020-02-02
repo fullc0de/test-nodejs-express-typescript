@@ -4,7 +4,8 @@ import * as path from 'path';
 import { isAPIVer } from "../enum";
 import { getStore } from '../metadata/index';
 import makeExpressRoute from './express-router';
-import { TokenAutoInterface } from './interface/service-interface';
+import { InjectorInterface } from './interface/injector-interface';
+import { Context } from "./interface/common-interfaces";
 
 export function buildRouter(prefix: string, controllerBasePath: string): Router {
     const router = Router();
@@ -22,20 +23,36 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
         }
     });
 
+    const beforeCallback = async (ctx: Context) => {
+        if (beforeInjectors) {
+            for(const i of beforeInjectors) {
+                await i.inject(ctx);
+            }
+        }
+    }
+
+    const afterCallback = async (ctx: Context) => {
+        if (afterInjectors) {
+            for(const i of afterInjectors) {
+                await i.inject(ctx);
+            }
+        }
+    }
+
     const pathInfos = getStore().buildRoutes(prefix);
     pathInfos.forEach((info) => {
         switch (info.method) {
             case "get":
-                router.get(info.path, makeExpressRoute(info.handler));
+                router.get(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
                 break;
             case "post":
-                router.post(info.path, makeExpressRoute(info.handler));
+                router.post(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
                 break;
             case "put":
-                router.put(info.path, makeExpressRoute(info.handler));
+                router.put(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
                 break;
             case "delete":
-                router.delete(info.path, makeExpressRoute(info.handler));
+                router.delete(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
                 break;
         }
     });
@@ -43,11 +60,12 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
     return router;
 }
 
-let tokenAuthService: TokenAutoInterface | undefined = undefined;
-export function registerTokenAuth(service: TokenAutoInterface) {
-    tokenAuthService = service;
+let beforeInjectors: InjectorInterface[] | undefined = undefined;
+export function registerBeforeInjectors(injectors: InjectorInterface[]) {
+    beforeInjectors = injectors;
 }
 
-export function getTokenAuthService(): TokenAutoInterface | undefined {
-    return tokenAuthService;
+let afterInjectors: InjectorInterface[] | undefined = undefined;
+export function registerAfterInjectors(injectors: InjectorInterface[]) {
+    afterInjectors = injectors;
 }
