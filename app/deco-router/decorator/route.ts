@@ -7,7 +7,7 @@ import { userAuthMap } from '../reflect-symbols';
 export function Route<T extends ControllerInterface & Function>(path: string, version: string) {
     return function (target: T) {
         const authInjector = Reflect.getOwnMetadata(userAuthMap, target);
-        console.log(`Route deco evaluated: path = '${path}', module_name = '${target.name}', authInjector = '${authInjector}'`);
+        console.log(`Route deco evaluated: path = '${path}', module_name = '${target.name}', authInjector = '${authInjector?.name}'`);
         if (isAPIVer(version)) {
             getStore().registerRoute(path, version, target, { userAuthInjector: authInjector });
         }

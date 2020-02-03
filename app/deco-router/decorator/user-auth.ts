@@ -10,6 +10,5 @@ import { userAuthMap } from '../reflect-symbols';
 export function UserAuth<T extends ControllerInterface & Function>(injector: any) {
     return function (target: T) {
         Reflect.defineMetadata(userAuthMap, injector, target);
-        console.log(`UserAuth deco evaluated: module_name = '${target.name}'`);
     }
 }

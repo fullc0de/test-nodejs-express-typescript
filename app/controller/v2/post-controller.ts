@@ -1,8 +1,8 @@
 import { PostController as V1 } from "../v1/post-controller";
-import {Context} from "../../deco-router/interface/common-interfaces";
+import { Context } from "../../deco-router/interface/common-interfaces";
 import { Route } from '../../deco-router/decorator/route';
-import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 import { UserAuth } from '../../deco-router/decorator/user-auth';
+import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 import { Users } from '../../model/users';
 
 @Route("posts", "v2")

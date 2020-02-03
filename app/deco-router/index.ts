@@ -19,7 +19,7 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
     fs.readdirSync(controllerBasePath, {withFileTypes: true}).forEach( (dir) => {
         if (dir.name[0] === 'v') {
             if (isAPIVer(dir.name)) {
-                require(path.join(controllerBasePath, dir.name)).load();
+                require(path.join(controllerBasePath, dir.name));
             }
         }
     });
