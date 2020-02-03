@@ -1,8 +1,8 @@
-import { HttpRequest, HttpResponse } from "../decorator/interface/common-interfaces"
+import { HttpRequest, HttpResponse } from "../deco-router/interface/common-interfaces"
 import { Resource, APIVer } from "../enum";
 // import v1Controller from "./v1";
 // import v2Controller from "./v2";
-import { ControllerInterface } from "../decorator/interface/controller-interface";
+import { ControllerInterface } from "../deco-router/interface/controller-interface";
 
 // function createController(resource: Resource, version: APIVer, callback: (controller?: ControllerInterface) => void) {
 //     switch (version) {

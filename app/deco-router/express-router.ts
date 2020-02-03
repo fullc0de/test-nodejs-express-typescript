@@ -1,4 +1,5 @@
 import { RoutableFunction, ExpressFunction, Context, InjectableFunction } from './interface/common-interfaces';
+import { DecoRouterError } from './deco-router-error';
 
 export default function makeExpressRoute(callback?: RoutableFunction, beforeCallback?: InjectableFunction, afterCallback?: InjectableFunction): ExpressFunction {
     return async (req, res) => {
@@ -12,11 +13,7 @@ export default function makeExpressRoute(callback?: RoutableFunction, beforeCall
                 body: req.body,
                 query: req.query,
                 params: req.params,
-                headers: {
-                    'Content-Type': req.get('Content-Type'),
-                    Referer: req.get('referer'),
-                    'User-Agent': req.get('User-Agent')
-                }
+                headers: req.headers
             },
             additional: {}
         }
@@ -42,7 +39,11 @@ export default function makeExpressRoute(callback?: RoutableFunction, beforeCall
                 res.status(500).send({ error: `a response of a context is undefined`});
             }
         } catch (e) {
-            res.status(500).send({ error: `${e.message}`});
+            if (e instanceof DecoRouterError) {
+                res.status(e.statusCode).send({ error: `${e.message}`});
+            } else {
+                res.status(500).send({ error: `${e.message}`});
+            }
         }
     };
 }

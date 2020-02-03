@@ -1,6 +1,6 @@
-import { ControllerInterface } from '../../../../app/decorator/interface/controller-interface';
-import { Context } from '../../../../app/decorator/interface/common-interfaces';
-import { Route } from '../../../../app/decorator/route';
+import { ControllerInterface } from '../../../../app/deco-router/interface/controller-interface';
+import { Context } from '../../../../app/deco-router/interface/common-interfaces';
+import { Route } from '../../../../app/deco-router/decorator/route';
 
 @Route("users", "v1")
 export class UserController implements ControllerInterface {

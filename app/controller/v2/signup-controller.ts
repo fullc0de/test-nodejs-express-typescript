@@ -1,7 +1,7 @@
 import BaseController from '../base-controller';
-import { ControllerInterface } from '../../decorator/interface/controller-interface';
-import { Context } from '../../decorator/interface/common-interfaces';
-import { Route } from '../../decorator/route';
+import { ControllerInterface } from '../../deco-router/interface/controller-interface';
+import { Context } from '../../deco-router/interface/common-interfaces';
+import { Route } from '../../deco-router/decorator/route';
 import { getConnection } from 'typeorm';
 import { Users } from '../../model/users';
 import InternalError from '../../common/internal-error';
@@ -9,7 +9,7 @@ import InternalError from '../../common/internal-error';
 @Route("signup", "v2")
 export class SignUpController extends BaseController implements ControllerInterface {
 
-    public async show(ctx: Context) {
+    public async post(ctx: Context) {
         const repo = getConnection().getRepository(Users);
         const user = await repo.findOne(ctx.request.params.id);
         if (user == null) {
@@ -24,13 +24,12 @@ export class SignUpController extends BaseController implements ControllerInterf
         };
     }
 
-
-    public async put(ctx: Context) {
-        ctx.response = {
-            statusCode: 500,
-            body: { hello: "fwef" }
-        };
-    }
+    // public async put(ctx: Context) {
+    //     ctx.response = {
+    //         statusCode: 500,
+    //         body: { hello: "fwef" }
+    //     };
+    // }
 }
 
 // test

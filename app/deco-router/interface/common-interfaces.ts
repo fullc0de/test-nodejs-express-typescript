@@ -5,7 +5,7 @@ interface HttpRequest {
     readonly body: {}
     readonly query: string
     readonly params: ParamDict<string>
-    readonly headers: {}
+    readonly headers: ParamDict<string>
 };
 
 interface HttpResponse {

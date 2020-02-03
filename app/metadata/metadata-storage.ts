@@ -1,27 +1,33 @@
-import { APIVer, prevVer } from "../enum";
-import { RoutableFunction } from "../decorator/interface/common-interfaces";
-import { ControllerInterface } from '../decorator/interface/controller-interface';
 import * as _ from "lodash";
-
+import { APIVer, prevVer } from "../enum";
+import { RoutableFunction } from "../deco-router/interface/common-interfaces";
+import { ControllerInterface } from '../deco-router/interface/controller-interface';
 
 interface RouteMetadataInterface {
     version: APIVer,
     path: string, 
     ctor: any,
-    handlers: ControllerInterface
+    handlers: ControllerInterface,
+    options: RouteMetadataOptionsInterface
+}
+
+export interface RouteMetadataOptionsInterface {
+    userAuthInjector: any,
 }
 
 export interface RouteInfo {
     method: "get"|"post"|"put"|"delete",
     path: string,
-    handler: RoutableFunction
+    ctor: any,
+    handler: RoutableFunction,
+    routeOptions: RouteMetadataOptionsInterface
 }
 
 export class MetadataStorage {
 
     private routes: RouteMetadataInterface[] = [];
 
-    public registerRoute(path: string, version: APIVer, ctor: any) {
+    public registerRoute(path: string, version: APIVer, ctor: any, options: RouteMetadataOptionsInterface) {
         this.routes.push({
             version: version,
             path: path,
@@ -32,7 +38,8 @@ export class MetadataStorage {
                 post: ctor.prototype?.post,
                 put: ctor.prototype?.put,
                 delete: ctor.prototype?.delete
-            }
+            },
+            options: options
         });
     }
     
@@ -92,7 +99,9 @@ export class MetadataStorage {
                     routeInfos.push({
                         method: "get",
                         path: `${pathPrefix}/${route.version}/${route.path}`,
-                        handler: route.handlers.index
+                        ctor: route.ctor,
+                        handler: route.handlers.index,
+                        routeOptions: route.options
                     })    
                 }
 
@@ -100,7 +109,9 @@ export class MetadataStorage {
                     routeInfos.push({
                         method: "get",
                         path: `${pathPrefix}/${route.version}/${route.path}/:id`,
-                        handler: route.handlers.show
+                        ctor: route.ctor,
+                        handler: route.handlers.show,
+                        routeOptions: route.options
                     })    
                 }
 
@@ -108,7 +119,9 @@ export class MetadataStorage {
                     routeInfos.push({
                         method: "post",
                         path: `${pathPrefix}/${route.version}/${route.path}`,
-                        handler: route.handlers.post
+                        ctor: route.ctor,
+                        handler: route.handlers.post,
+                        routeOptions: route.options
                     })    
                 }
 
@@ -116,7 +129,9 @@ export class MetadataStorage {
                     routeInfos.push({
                         method: "put",
                         path: `${pathPrefix}/${route.version}/${route.path}/:id`,
-                        handler: route.handlers.put
+                        ctor: route.ctor,
+                        handler: route.handlers.put,
+                        routeOptions: route.options
                     })    
                 }
 
@@ -124,7 +139,9 @@ export class MetadataStorage {
                     routeInfos.push({
                         method: "delete",
                         path: `${pathPrefix}/${route.version}/${route.path}/:id`,
-                        handler: route.handlers.delete
+                        ctor: route.ctor,
+                        handler: route.handlers.delete,
+                        routeOptions: route.options
                     })    
                 }
             })

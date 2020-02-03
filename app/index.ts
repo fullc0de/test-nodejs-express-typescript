@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import express from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
-import { buildRouter } from "./decorator";
+import { buildRouter } from "./deco-router";
 import * as path from 'path';
-import { registerBeforeInjectors, registerAfterInjectors } from './decorator/index';
+import { registerBeforeInjectors, registerAfterInjectors } from './deco-router/index';
 import { JwtAuthDecoInjector } from './deco-injector/jwt-auth-deco-injector';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 
@@ -21,9 +21,7 @@ const app: express.Application = express();
     console.log(e);
 });
 
-registerBeforeInjectors([
-    new JwtAuthDecoInjector("hello key")
-]);
+registerBeforeInjectors([]);
 
 registerAfterInjectors([
     new LogDecoInjector()
@@ -31,6 +29,7 @@ registerAfterInjectors([
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
+    req.headers
     next();
 });
 

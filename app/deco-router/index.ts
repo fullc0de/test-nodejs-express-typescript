@@ -6,6 +6,7 @@ import { getStore } from '../metadata/index';
 import makeExpressRoute from './express-router';
 import { InjectorInterface } from './interface/injector-interface';
 import { Context } from "./interface/common-interfaces";
+import { RouteMetadataOptionsInterface } from '../metadata/metadata-storage';
 
 export function buildRouter(prefix: string, controllerBasePath: string): Router {
     const router = Router();
@@ -23,24 +24,37 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
         }
     });
 
-    const beforeCallback = async (ctx: Context) => {
-        if (beforeInjectors) {
-            for(const i of beforeInjectors) {
-                await i.inject(ctx);
+    function makeBeforeCallback(routeOptions: RouteMetadataOptionsInterface) {
+        return async (ctx: Context) => {
+
+            if (routeOptions.userAuthInjector) {
+                const authInjector = new routeOptions.userAuthInjector();
+                await authInjector.inject(ctx);    
+            }
+
+            if (beforeInjectors) {
+                for(const i of beforeInjectors) {
+                    await i.inject(ctx);
+                }
             }
         }
-    }
+    } 
 
-    const afterCallback = async (ctx: Context) => {
-        if (afterInjectors) {
-            for(const i of afterInjectors) {
-                await i.inject(ctx);
+    function makeAfterCallback(routeOptions: RouteMetadataOptionsInterface) {
+        return async (ctx: Context) => {
+            if (afterInjectors) {
+                for(const i of afterInjectors) {
+                    await i.inject(ctx);
+                }
             }
         }
     }
 
     const pathInfos = getStore().buildRoutes(prefix);
     pathInfos.forEach((info) => {
+        const beforeCallback = makeBeforeCallback(info.routeOptions);
+        const afterCallback = makeAfterCallback(info.routeOptions);
+        console.log(`path = [${info.path}]`);
         switch (info.method) {
             case "get":
                 router.get(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { getStore } from '../../app/metadata/index';
 
 describe('metadata > storage', () => {

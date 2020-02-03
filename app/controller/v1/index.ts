@@ -1,7 +1,7 @@
 import { PostController } from "./post-controller";
 import { CommentController } from './comment-controller';
 import { Resource } from "../../enum";
-import { ControllerInterface } from '../../decorator/interface/controller-interface';
+import { ControllerInterface } from '../../deco-router/interface/controller-interface';
 
 // export function v1Controller(resource: Resource): ControllerInterface | undefined {
 //     switch (resource) {
