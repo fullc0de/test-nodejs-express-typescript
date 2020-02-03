@@ -11,9 +11,9 @@ describe('metadata > storage', () => {
 
         let routeInfos = getStore().buildRoutes("api");
 
-        routeInfos.forEach((r) => {
-            console.log(`path=${r.path}, method=${r.method}`);
-        });
+        // routeInfos.forEach((r) => {
+        //     console.log(`path=${r.path}, method=${r.method}`);
+        // });
         expect(routeInfos.findIndex((r) => r.path === "/api/v1/users" && r.method === "get")).not.toBe(-1);
         expect(routeInfos.findIndex((r) => r.path === "/api/v1/users/:id" && r.method === "get")).not.toBe(-1);
         expect(routeInfos.findIndex((r) => r.path === "/api/v1/users" && r.method === "post")).not.toBe(-1);

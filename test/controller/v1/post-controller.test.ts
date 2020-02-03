@@ -16,9 +16,6 @@ beforeAll(async () => {
             "type": "mysql",
             "url": 'mysql://root:123456@127.0.0.1/test'
         }]);
-        conns.forEach(conn => {
-            console.log(`conn name = ${conn.name}`);
-        });
     })();
 });
 
