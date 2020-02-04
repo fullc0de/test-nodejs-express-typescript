@@ -6,7 +6,7 @@ import { UserAuth } from '../../deco-router/decorator/user-auth';
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 
 @Route("comments", "v1")
-@UserAuth(JwtAuthDecoInjector)
+@UserAuth(new JwtAuthDecoInjector())
 export class CommentController extends BaseController implements ControllerInterface {
     
     public async index(ctx: Context) {

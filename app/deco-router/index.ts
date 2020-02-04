@@ -4,9 +4,10 @@ import * as path from 'path';
 import { isAPIVer } from "../enum";
 import { getStore } from '../metadata/index';
 import makeExpressRoute from './express-router';
-import { InjectorInterface } from './interface/injector-interface';
+import { BaseInjector } from './interface/injector-class-interface';
 import { Context } from "./interface/common-interfaces";
 import { RouteMetadataOptionsInterface } from '../metadata/metadata-storage';
+import { RouteCallbacks } from './express-router';
 
 export function buildRouter(prefix: string, controllerBasePath: string): Router {
     const router = Router();
@@ -28,7 +29,7 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
         return async (ctx: Context) => {
 
             if (routeOptions.userAuthInjector) {
-                const authInjector = new routeOptions.userAuthInjector();
+                const authInjector = routeOptions.userAuthInjector;
                 await authInjector.inject(ctx);    
             }
 
@@ -52,21 +53,24 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
 
     const pathInfos = getStore().buildRoutes(prefix);
     pathInfos.forEach((info) => {
-        const beforeCallback = makeBeforeCallback(info.routeOptions);
-        const afterCallback = makeAfterCallback(info.routeOptions);
+        const callbacks: RouteCallbacks = {
+            routeCallback: info.handler,
+            beforeCallback: makeBeforeCallback(info.routeOptions),
+            afterCallback: makeAfterCallback(info.routeOptions)
+        }
         console.log(`path = [${info.path}]`);
         switch (info.method) {
             case "get":
-                router.get(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
+                router.get(info.path, makeExpressRoute(callbacks));
                 break;
             case "post":
-                router.post(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
+                router.post(info.path, makeExpressRoute(callbacks));
                 break;
             case "put":
-                router.put(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
+                router.put(info.path, makeExpressRoute(callbacks));
                 break;
             case "delete":
-                router.delete(info.path, makeExpressRoute(info.handler, beforeCallback, afterCallback));
+                router.delete(info.path, makeExpressRoute(callbacks));
                 break;
         }
     });
@@ -74,12 +78,12 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
     return router;
 }
 
-let beforeInjectors: InjectorInterface[] | undefined = undefined;
-export function registerBeforeInjectors(injectors: InjectorInterface[]) {
+let beforeInjectors: BaseInjector[] | undefined = undefined;
+export function registerBeforeInjectors(injectors: BaseInjector[]) {
     beforeInjectors = injectors;
 }
 
-let afterInjectors: InjectorInterface[] | undefined = undefined;
-export function registerAfterInjectors(injectors: InjectorInterface[]) {
+let afterInjectors: BaseInjector[] | undefined = undefined;
+export function registerAfterInjectors(injectors: BaseInjector[]) {
     afterInjectors = injectors;
 }

@@ -1,5 +1,6 @@
 import { MetadataStorage } from '../../app/metadata/metadata-storage';
 import { Context } from '../../app/deco-router/interface/common-interfaces';
+import { JwtAuthDecoInjector } from '../../app/deco-injector/jwt-auth-deco-injector';
 
 class UserV1 {
     index(ctx: Context) {}
@@ -19,9 +20,9 @@ describe('metadata > storage', () => {
 
     it('should make proper routing information with input ', () => {
 
-        storage.registerRoute("users", "v1", UserV1, { userAuthInjector: true });
-        storage.registerRoute("posts", "v1", PostV1, { userAuthInjector: true });
-        storage.registerRoute("posts", "v2", PostV2, { userAuthInjector: true });
+        storage.registerRoute("users", "v1", UserV1, { userAuthInjector: new JwtAuthDecoInjector() });
+        storage.registerRoute("posts", "v1", PostV1, { userAuthInjector: new JwtAuthDecoInjector() });
+        storage.registerRoute("posts", "v2", PostV2, { userAuthInjector: new JwtAuthDecoInjector() });
         
         let routeInfos = storage.buildRoutes("api");
 

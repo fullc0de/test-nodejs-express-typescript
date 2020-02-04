@@ -4,7 +4,6 @@ import {createConnections, getConnectionOptions} from "typeorm";
 import { buildRouter } from "./deco-router";
 import * as path from 'path';
 import { registerBeforeInjectors, registerAfterInjectors } from './deco-router/index';
-import { JwtAuthDecoInjector } from './deco-injector/jwt-auth-deco-injector';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 
 const app: express.Application = express();
@@ -22,7 +21,6 @@ const app: express.Application = express();
 });
 
 registerBeforeInjectors([]);
-
 registerAfterInjectors([
     new LogDecoInjector()
 ]);
@@ -32,6 +30,8 @@ app.use("*", (req, res, next) => {
     req.headers
     next();
 });
+
+app.use(express.json());
 
 const controllerPath = path.join(__dirname, 'controller');
 app.use(buildRouter('api', controllerPath));

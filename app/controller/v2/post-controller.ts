@@ -6,7 +6,7 @@ import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector'
 import { Users } from '../../model/users';
 
 @Route("posts", "v2")
-@UserAuth(JwtAuthDecoInjector)
+@UserAuth(new JwtAuthDecoInjector())
 export class PostController extends V1 {
     public async index(ctx: Context) {
         const user: Users = ctx.additional['user'];

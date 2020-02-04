@@ -6,7 +6,7 @@ import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector'
 import { UserAuth } from '../../deco-router/decorator/user-auth';
 
 @Route("posts", "v1")
-@UserAuth(JwtAuthDecoInjector)
+@UserAuth(new JwtAuthDecoInjector())
 export class PostController extends BaseController implements ControllerInterface {
     
     public async index(ctx: Context) {

@@ -1,15 +1,16 @@
-import { InjectorInterface } from '../deco-router/interface/injector-interface';
+import { BaseInjector } from '../deco-router/interface/injector-class-interface';
 import { Context } from '../deco-router/interface/common-interfaces';
 import { DecoRouterError } from '../deco-router/deco-router-error';
 import { getConnection } from 'typeorm';
 import { Users } from '../model/users';
 
-export class JwtAuthDecoInjector implements InjectorInterface {
-    private privateKey: string = "private key";
+export class JwtAuthDecoInjector extends BaseInjector {
+    private privateKey: string = "123123902342342@#$@#$234";
 
     public async inject(ctx: Context) {
         const token = ctx.request.headers['authorization'];
         if (token) {
+            console.log(`private key = [${this.privateKey}]`);
             ctx.additional["token"] = token;
             const repo = getConnection().getRepository(Users);
             const user = await repo.findOne(1);

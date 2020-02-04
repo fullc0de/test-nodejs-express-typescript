@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import { APIVer, prevVer } from "../enum";
 import { RoutableFunction } from "../deco-router/interface/common-interfaces";
 import { ControllerInterface } from '../deco-router/interface/controller-interface';
+import { BaseInjector } from '../deco-router/interface/injector-class-interface';
 
 interface RouteMetadataInterface {
     version: APIVer,
@@ -12,7 +13,7 @@ interface RouteMetadataInterface {
 }
 
 export interface RouteMetadataOptionsInterface {
-    userAuthInjector: any,
+    userAuthInjector?: BaseInjector
 }
 
 export interface RouteInfo {

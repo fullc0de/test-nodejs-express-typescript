@@ -1,9 +1,15 @@
 import { RoutableFunction, ExpressFunction, Context, InjectableFunction } from './interface/common-interfaces';
 import { DecoRouterError } from './deco-router-error';
 
-export default function makeExpressRoute(callback?: RoutableFunction, beforeCallback?: InjectableFunction, afterCallback?: InjectableFunction): ExpressFunction {
+export interface RouteCallbacks {
+    routeCallback?: RoutableFunction,
+    beforeCallback?: InjectableFunction,
+    afterCallback?: InjectableFunction
+}
+
+export default function makeExpressRoute(callbacks: RouteCallbacks): ExpressFunction {
     return async (req, res) => {
-        if (callback === undefined) {
+        if (callbacks.routeCallback === undefined) {
             res.status(500).send({ error: "No routing function defined"});
             return;
         }
@@ -19,14 +25,14 @@ export default function makeExpressRoute(callback?: RoutableFunction, beforeCall
         }
         try {
 
-            if (beforeCallback) {
-                await beforeCallback(context);
+            if (callbacks.beforeCallback) {
+                await callbacks.beforeCallback(context);
             }
 
-            await callback(context);
+            await callbacks.routeCallback(context);
 
-            if (afterCallback) {
-                await afterCallback(context);
+            if (callbacks.afterCallback) {
+                await callbacks.afterCallback(context);
             }
 
             if (context.response !== undefined) {

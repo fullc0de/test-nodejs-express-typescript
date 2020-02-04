@@ -1,5 +1,6 @@
 import { ControllerInterface } from '../interface/controller-interface';
-import { userAuthMap } from '../reflect-symbols';
+import { UserAuthMap } from '../reflect-symbols';
+import { BaseInjector } from '../interface/injector-class-interface';
 
 /**
  * Register an injector for user authentication.
@@ -7,8 +8,8 @@ import { userAuthMap } from '../reflect-symbols';
  * @param injector an injector which implements InjectorInterface.
  * @returns Class decorator function.
  */
-export function UserAuth<T extends ControllerInterface & Function>(injector: any) {
+export function UserAuth<T extends ControllerInterface & Function, I extends BaseInjector>(injector: I) {
     return function (target: T) {
-        Reflect.defineMetadata(userAuthMap, injector, target);
+        Reflect.defineMetadata(UserAuthMap, injector, target);
     }
 }
