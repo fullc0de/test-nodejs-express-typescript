@@ -4,7 +4,7 @@ import * as path from 'path';
 import { isAPIVer } from "../enum";
 import { getStore } from '../metadata/index';
 import makeExpressRoute from './express-router';
-import { BaseInjector } from './interface/injector-class-interface';
+import { InjectorInterface } from './interface/injector-interface';
 import { Context } from "./interface/common-interfaces";
 import { RouteMetadataOptionsInterface } from '../metadata/metadata-storage';
 import { RouteCallbacks } from './express-router';
@@ -78,12 +78,12 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
     return router;
 }
 
-let beforeInjectors: BaseInjector[] | undefined = undefined;
-export function registerBeforeInjectors(injectors: BaseInjector[]) {
+let beforeInjectors: InjectorInterface[] | undefined = undefined;
+export function registerBeforeInjectors(injectors: InjectorInterface[]) {
     beforeInjectors = injectors;
 }
 
-let afterInjectors: BaseInjector[] | undefined = undefined;
-export function registerAfterInjectors(injectors: BaseInjector[]) {
+let afterInjectors: InjectorInterface[] | undefined = undefined;
+export function registerAfterInjectors(injectors: InjectorInterface[]) {
     afterInjectors = injectors;
 }
