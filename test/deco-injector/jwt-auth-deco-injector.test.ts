@@ -13,10 +13,6 @@ beforeAll(async () => {
                 "build/app/model/**/*.js"
             ],
             "synchronize": false,
-        },{
-            "name": "mysqldb",
-            "type": "mysql",
-            "url": 'mysql://root:123456@127.0.0.1/test'
         }]);
     })();
 });
@@ -27,7 +23,7 @@ describe("JWT Auth deco-injector", () => {
         const ctx: Context = {
             request: {
                 body: {},
-                query: "",
+                query: {},
                 params: {},
                 headers: {}
             },
@@ -43,21 +39,21 @@ describe("JWT Auth deco-injector", () => {
         }
     })
 
-    it("should set user model to the additional in the context", async () => {
-        const injector = new JwtAuthDecoInjector();
-        const ctx: Context = {
-            request: {
-                body: {},
-                query: "",
-                params: {},
-                headers: {
-                    authorization: "test-token"
-                }
-            },
-            additional: {}
-        }
-        await injector.inject(ctx);
-        const user = ctx.additional["user"];
-        expect(user).toBeDefined();
-    })
+    // it("should set user model to the additional in the context", async () => {
+    //     const injector = new JwtAuthDecoInjector();
+    //     const ctx: Context = {
+    //         request: {
+    //             body: {},
+    //             query: {},
+    //             params: {},
+    //             headers: {
+    //                 authorization: "test-token"
+    //             }
+    //         },
+    //         additional: {}
+    //     }
+    //     await injector.inject(ctx);
+    //     const user = ctx.additional["user"];
+    //     expect(user).toBeDefined();
+    // })
 })

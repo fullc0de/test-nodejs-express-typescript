@@ -11,14 +11,14 @@ export class JwtAuthDecoInjector implements InjectorInterface {
         const token = ctx.request.headers['authorization'];
         if (token) {
             console.log(`private key = [${this.privateKey}]`);
-            ctx.additional["token"] = token;
-            const repo = getConnection().getRepository(Users);
-            const user = await repo.findOne(1);
-            if (user) {
-                ctx.additional["user"] = user;
-            } else {
-                throw new DecoRouterError(403, "invalid token");
-            }
+            // ctx.additional["token"] = token;
+            // const repo = getConnection().getRepository(Users);
+            // const user = await repo.findOne(1);
+            // if (user) {
+            //     ctx.additional["user"] = user;
+            // } else {
+            //     throw new DecoRouterError(403, "invalid token");
+            // }
         } else {
             throw new DecoRouterError(403, "an auth token is expected to be a value of 'Authorization' header");
         }

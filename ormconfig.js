@@ -1,9 +1,14 @@
 
+let fs = require('fs');
 let dotenv = require('dotenv');
 
 dotenv.config();
 if (process.env.NODE_ENV == "local") {
     dotenv.config({path: `${__dirname}/.env.local`});
+} else if (process.env.NODE_ENV == "development") {
+    if (fs.existsSync(`${__dirname}/.env.dev`)) {
+        dotenv.config({path: `${__dirname}/.env.dev`});
+    }
 }
 
 module.exports = [{
@@ -22,8 +27,4 @@ module.exports = [{
     },
     "synchronize": false,
     "logging": ["query", "error", "schema"]
-}, {
-    "name": "mysqldb",
-    "type": "mysql",
-    "url": process.env.MYSQL_URL
 }];

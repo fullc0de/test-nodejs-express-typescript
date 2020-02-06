@@ -2,13 +2,13 @@
 
 exports[`PostController V1 - check functionality of base controller get current user 1`] = `
 Users {
-  "address": "verve",
-  "createdAt": 2020-01-14T21:48:50.862Z,
+  "address": "verve residences t1",
+  "createdAt": 2020-02-04T01:03:21.477Z,
   "dummy": "dummy",
-  "firstName": "hwang",
+  "firstName": "kyokook",
   "id": 1,
-  "lastName": "kyokook",
-  "updatedAt": 2020-01-14T21:48:50.862Z,
+  "lastName": "hwang",
+  "updatedAt": 2020-02-04T01:03:21.477Z,
   "version": 1,
 }
 `;

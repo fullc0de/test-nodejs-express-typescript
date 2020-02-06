@@ -2,8 +2,8 @@
 interface ParamDict<T> { [key: string]: T };
 
 interface HttpRequest {
-    readonly body: {}
-    readonly query: string
+    readonly body: ParamDict<string>
+    readonly query: ParamDict<string>
     readonly params: ParamDict<string>
     readonly headers: ParamDict<string>
 };
@@ -23,6 +23,19 @@ interface Context {
 type ExpressFunction = (req: any, res: any) => void;
 type RoutableFunction = (ctx: Context) => Promise<void>;
 type InjectableFunction = (ctx: Context) => Promise<void>;
+type ValidatableFunction = (ctx: Context) => Promise<void>;
+
+interface RequestParamOptions {
+    required: boolean,
+    validate?: (value: string) => boolean,
+    errorMessage?: string
+}
+
+interface RequestParamMetadata {
+    type: "query"|"post",
+    paramKey: string,
+    options: RequestParamOptions
+}
 
 export {
     ParamDict,
@@ -31,5 +44,8 @@ export {
     Context,
     ExpressFunction,
     RoutableFunction,
-    InjectableFunction
+    InjectableFunction,
+    ValidatableFunction,
+    RequestParamOptions,
+    RequestParamMetadata
 }

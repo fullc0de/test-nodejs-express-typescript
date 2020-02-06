@@ -1,8 +1,9 @@
-import { RoutableFunction, ExpressFunction, Context, InjectableFunction } from './interface/common-interfaces';
+import { RoutableFunction, ExpressFunction, Context, InjectableFunction, ValidatableFunction } from './interface/common-interfaces';
 import { DecoRouterError } from './deco-router-error';
 
 export interface RouteCallbacks {
     routeCallback?: RoutableFunction,
+    paramValidateCallback?: ValidatableFunction,
     beforeCallback?: InjectableFunction,
     afterCallback?: InjectableFunction
 }
@@ -25,6 +26,10 @@ export default function makeExpressRoute(callbacks: RouteCallbacks): ExpressFunc
         }
         try {
 
+            if (callbacks.paramValidateCallback) {
+                await callbacks.paramValidateCallback(context);
+            }
+            
             if (callbacks.beforeCallback) {
                 await callbacks.beforeCallback(context);
             }

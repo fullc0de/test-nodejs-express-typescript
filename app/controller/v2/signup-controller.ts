@@ -9,20 +9,26 @@ import InternalError from '../../common/internal-error';
 @Route("signup", "v2")
 export class SignUpController extends BaseController implements ControllerInterface {
 
-    public async post(ctx: Context) {
-        const repo = getConnection().getRepository(Users);
-        const user = await repo.findOne(ctx.request.params.id);
-        if (user == null) {
-            throw new InternalError("failed to find a user");
-        }
-        
-        user.dummy = "hello";
-
+    public async index(ctx: Context) {
         ctx.response = {
             statusCode: 200,
-            body: user
+            body: { message: "signed up!" }
         };
     }
+    // public async put(ctx: Context) {
+    //     const repo = getConnection().getRepository(Users);
+    //     const user = await repo.findOne(ctx.request.params.id);
+    //     if (user == null) {
+    //         throw new InternalError("failed to find a user");
+    //     }
+        
+    //     user.dummy = "hello";
+
+    //     ctx.response = {
+    //         statusCode: 200,
+    //         body: user
+    //     };
+    // }
 
     // public async put(ctx: Context) {
     //     ctx.response = {

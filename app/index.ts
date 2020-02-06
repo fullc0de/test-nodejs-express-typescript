@@ -7,11 +7,12 @@ import { registerBeforeInjectors, registerAfterInjectors } from './deco-router/i
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 
 const app: express.Application = express();
+app.use(express.urlencoded());
 
 (async () => {
     let postgresOpts = await getConnectionOptions("default");
-    let mysqlOpts = await getConnectionOptions("mysqldb");
-    const conns = await createConnections([postgresOpts, mysqlOpts]);
+//    let mysqlOpts = await getConnectionOptions("mysqldb");
+    const conns = await createConnections([postgresOpts]);
     conns.forEach(conn => {
         console.log(`conn name = ${conn.name}`);
     });
@@ -27,11 +28,8 @@ registerAfterInjectors([
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
-    req.headers
     next();
 });
-
-app.use(express.json());
 
 const controllerPath = path.join(__dirname, 'controller');
 app.use(buildRouter('api', controllerPath));
