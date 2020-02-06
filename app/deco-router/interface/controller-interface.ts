@@ -2,18 +2,28 @@ import { RoutableFunction } from "./common-interfaces";
 
 
 export interface ControllerInterface {
-    // get '/'
+    /** 
+     * Handling 'GET /'
+    */
     index?: RoutableFunction;
 
-    // get '/:id'
+    /** 
+     * Handling 'GET /:id'
+    */
     show?: RoutableFunction;
 
-    // put ':id'
+    /** 
+     * Handling 'PUT /:id'
+    */
     put?: RoutableFunction;
 
-    // post '/'
+    /** 
+     * Handling 'POST /'
+    */
     post?: RoutableFunction;
 
-    // delete ':id'
+    /** 
+     * Handling 'DELETE /:id'
+    */
     delete?: RoutableFunction;
 };
