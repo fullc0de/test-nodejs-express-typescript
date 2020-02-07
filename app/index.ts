@@ -5,9 +5,10 @@ import { buildRouter } from "./deco-router";
 import * as path from 'path';
 import { registerBeforeInjectors, registerAfterInjectors } from './deco-router/index';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
+import swaggerUi from 'swagger-ui-express';
 
 const app: express.Application = express();
-app.use(express.urlencoded());
+app.use(express.json());
 
 (async () => {
     let postgresOpts = await getConnectionOptions("default");
@@ -30,6 +31,10 @@ app.use("*", (req, res, next) => {
     console.log("start preprocess...");
     next();
 });
+
+const swaggerDoc = require('../../swagger-v1');
+swaggerDoc.host = "localhost:3000";
+app.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 const controllerPath = path.join(__dirname, 'controller');
 app.use(buildRouter('api', controllerPath));
