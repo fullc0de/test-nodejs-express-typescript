@@ -4,6 +4,7 @@ import { ControllerInterface } from "../../deco-router/interface/controller-inte
 import { Route } from "../../deco-router/decorator/route";
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 import { UserAuth } from '../../deco-router/decorator/user-auth';
+import { QueryParam } from "../../deco-router/decorator/query-param";
 
 @Route("posts", "v1")
 @UserAuth(new JwtAuthDecoInjector())
@@ -17,16 +18,12 @@ export class PostController extends BaseController implements ControllerInterfac
         };
     }
 
+    @QueryParam("postId", { required: true })
     public async show(ctx: Context) {
-        const postId = super.validateParamId(ctx.request.params.id)
-        if (postId instanceof Error) {
-            throw postId
-        }
-        
         ctx.response = {
             statusCode: 200,
             body: {
-                id: postId,
+                id: ctx.additional.query.postId,
                 author: "J. K. Rolling",
                 title: "Harry Potter"
             }

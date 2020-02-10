@@ -12,6 +12,7 @@ import { RequestParamMetadata } from './interface/common-interfaces';
 import { ValidateQueryParamMap, ValidatePostParamMap } from './reflect-symbols';
 import _ from "lodash";
 import { DecoRouterError } from './deco-router-error';
+import { ControllerInterface } from './interface/controller-interface';
 
 let beforeInjectors: InjectorInterface[] | undefined = undefined;
 export function registerBeforeInjectors(injectors: InjectorInterface[]) {
@@ -23,7 +24,7 @@ export function registerAfterInjectors(injectors: InjectorInterface[]) {
     afterInjectors = injectors;
 }
 
-export function buildRouter(prefix: string, controllerBasePath: string): Router {
+export function buildRouter(prefix: string, controllersOrBasePath: ControllerInterface[] | string): Router {
     const router = Router();
 
     router.get('/', (req, res) => {
@@ -31,13 +32,15 @@ export function buildRouter(prefix: string, controllerBasePath: string): Router 
         res.send("<h1>Welcome to ROOT!!</h1>");
     })
     
-    fs.readdirSync(controllerBasePath, {withFileTypes: true}).forEach( (dir) => {
-        if (dir.name[0] === 'v') {
-            if (isAPIVer(dir.name)) {
-                require(path.join(controllerBasePath, dir.name));
+    if (typeof controllersOrBasePath == "string") {
+        fs.readdirSync(controllersOrBasePath, {withFileTypes: true}).forEach( (dir) => {
+            if (dir.name[0] === 'v') {
+                if (isAPIVer(dir.name)) {
+                    require(path.join(controllersOrBasePath, dir.name));
+                }
             }
-        }
-    });
+        });    
+    }
 
     const pathInfos = getStore().buildRoutes(prefix);
     pathInfos.forEach((info) => {

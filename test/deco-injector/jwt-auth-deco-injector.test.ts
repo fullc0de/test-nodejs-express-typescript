@@ -1,24 +1,15 @@
 import { JwtAuthDecoInjector } from '../../app/deco-injector/jwt-auth-deco-injector';
 import { Context } from '../../app/deco-router/interface/common-interfaces';
 import { DecoRouterError } from '../../app/deco-router/deco-router-error';
-import { createConnections } from 'typeorm';
+import * as typeorm from 'typeorm';
+import jwt from 'jsonwebtoken';
+import { Users } from '../../app/model/users';
 
-beforeAll(async () => {
-    return (async () => {
-        const conns = await createConnections([{
-            "name": "default",
-            "type": "postgres",
-            "url": 'postgres://postgres:123456@127.0.0.1/test',
-            "entities": [
-                "build/app/model/**/*.js"
-            ],
-            "synchronize": false,
-        }]);
-    })();
-});
+(typeorm as any).getConnection = jest.fn();
 
 describe("JWT Auth deco-injector", () => {
     it("should make deco route exception if 'Authorization' header doesn't exist", async () => {
+        process.env.JWT_TOKEN_SECRET = "test_private_key";
         const injector = new JwtAuthDecoInjector();
         const ctx: Context = {
             request: {
@@ -39,21 +30,39 @@ describe("JWT Auth deco-injector", () => {
         }
     })
 
-    // it("should set user model to the additional in the context", async () => {
-    //     const injector = new JwtAuthDecoInjector();
-    //     const ctx: Context = {
-    //         request: {
-    //             body: {},
-    //             query: {},
-    //             params: {},
-    //             headers: {
-    //                 authorization: "test-token"
-    //             }
-    //         },
-    //         additional: {}
-    //     }
-    //     await injector.inject(ctx);
-    //     const user = ctx.additional["user"];
-    //     expect(user).toBeDefined();
-    // })
+    it("should set user model to the additional in the context", async () => {
+        const token = jwt.sign({ userId: 1 }, "test_private_key");
+        process.env.JWT_TOKEN_SECRET = "test_private_key";
+
+        const mockUser = new Users();
+        mockUser.id = 1;
+        mockUser.firstName = "gildong";
+        mockUser.lastName = "hong";
+
+        (typeorm as any).getConnection.mockReturnValue({
+            getRepository: () => {
+                return {
+                    findOne: () => Promise.resolve(mockUser)
+                }
+            }
+        });
+
+        const injector = new JwtAuthDecoInjector();
+        const ctx: Context = {
+            request: {
+                body: {},
+                query: {},
+                params: {},
+                headers: {
+                    authorization: token
+                }
+            },
+            additional: {}
+        }
+        await injector.inject(ctx);
+        const user = ctx.additional["user"];
+        expect(user.constructor.name).toEqual("Users");
+        expect(user.firstName).toEqual("gildong");
+        expect(user.lastName).toEqual("hong");
+    })
 })
