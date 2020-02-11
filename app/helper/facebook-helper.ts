@@ -31,17 +31,12 @@ export default class FacebookHelper {
     }
 
     private async request(path: string, params: {}, method: Method) {
-        try {
-            const response = await axios({
-                headers: { 'User-Agent': 'Facebook Graph API Requester' },
-                method,
-                params: Object.assign({ access_token: this.token }, params),
-                url: `https://graph.facebook.com/${this.version}/${path}`
-            })
-            return response    
-        } catch(error) {
-            console.log(error);
-        }
+        return await axios({
+            headers: { 'User-Agent': 'Facebook Graph API Requester' },
+            method,
+            params: Object.assign({ access_token: this.token }, params),
+            url: `https://graph.facebook.com/${this.version}/${path}`
+        });
     }
 };
 
