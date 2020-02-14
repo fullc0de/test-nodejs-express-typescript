@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { CommonEntity } from './common-entity';
+import { Users } from './users';
 
 export enum CredentialServiceType {
     FACEBOOK = "facebook_service_id",
@@ -21,4 +22,8 @@ export class UserCredential extends CommonEntity {
 
     @Column()
     public authToken!: string;
+
+    @OneToOne(type => Users, user => user.credential, { onDelete: "CASCADE" })
+    @JoinColumn()
+    public user!: Users;
 }

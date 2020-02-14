@@ -14,7 +14,6 @@ export class Users extends CommonEntity {
     @Column({nullable: true})
     public address!: string;
 
-    @OneToOne(type => UserCredential)
-    @JoinColumn()
+    @OneToOne(type => UserCredential, credential => credential.user)
     public credential!: UserCredential;
 }

@@ -9,6 +9,10 @@ if (process.env.NODE_ENV == "local") {
     if (fs.existsSync(`${__dirname}/.env.dev`)) {
         dotenv.config({path: `${__dirname}/.env.dev`});
     }
+} else if (process.env.NODE_ENV == "test") {
+    if (fs.existsSync(`${__dirname}/.env.test`)) {
+        dotenv.config({path: `${__dirname}/.env.test`});
+    }
 }
 
 module.exports = [{

@@ -4,6 +4,7 @@ import { FacebookUserInfo } from '../helper/facebook-helper';
 import { UserCredential, CredentialServiceType } from '../model/user-credential';
 import jwt from 'jsonwebtoken';
 import { Connection } from 'typeorm';
+import { UseCaseError, UseCaseErrorCode } from './usecase-errors';
 
 export interface UserAdditionalInfo {
     address: string
@@ -17,10 +18,10 @@ export class RegisterUser {
         this.connection = conn;
     }
 
-    public async register(facebookToken: string, firstName: string, lastName: string, additional?: UserAdditionalInfo): Promise<Users | undefined> {
+    public async register(facebookToken: string, firstName: string, lastName: string, additional?: UserAdditionalInfo): Promise<Users> {
         const privateKey: string | undefined = process.env.JWT_TOKEN_SECRET;
         if (privateKey == null) {
-            throw Promise.reject("Absence of a secret key");
+            throw new UseCaseError(UseCaseErrorCode.InvalidParameter, "Absence of a secret key");
         }
 
         let info: FacebookUserInfo;
@@ -28,7 +29,14 @@ export class RegisterUser {
             const helper = new FacebookHelper("v5.0", facebookToken);
             info = await helper.user();
         } catch(e) {
-            return Promise.reject("failed to validate a facebook token");
+            throw new UseCaseError(UseCaseErrorCode.InvalidParameter, "failed to validate a facebook token");
+        }
+
+        const duplicated = await this.connection
+            .getRepository(UserCredential)
+            .findOne({ serviceType: CredentialServiceType.FACEBOOK, userServiceId: info.id });
+        if (duplicated) {
+            throw new UseCaseError(UseCaseErrorCode.Duplicate, "already signed up");
         }
 
         const user = new Users();
@@ -48,16 +56,16 @@ export class RegisterUser {
                 credential.serviceType = CredentialServiceType.FACEBOOK;
                 credential.userServiceId = info.id!;
                 credential.authToken = token;
+                credential.user = user;
                 await entityManager.save(credential);
-        
-                user.credential = credential;
-                await entityManager.save(user);
-            });    
+            });
+
         } catch(e) {
-            console.log(`transaction error on creating user: ${e}`);
-            return undefined;
+            throw new UseCaseError(UseCaseErrorCode.TransactionFailed, `transaction error on creating user: ${e}`);
         }
 
-        return user;
+        return this.connection
+            .getRepository(Users)
+            .findOneOrFail(user.id, { relations: ["credential"] });
     }
 }
