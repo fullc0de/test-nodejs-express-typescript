@@ -21,8 +21,6 @@ export class UserController extends BaseController implements ControllerInterfac
             throw new InternalError("failed to find a user");
         }
         
-        user.dummy = "hello";
-
         ctx.response = {
             statusCode: 200,
             body: user
