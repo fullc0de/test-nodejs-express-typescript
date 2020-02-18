@@ -15,11 +15,12 @@ import { SignUpController } from '../../../app/controller/v2/signup-controller';
 
 describe('SignUpController V2', () => {
     describe('POST v2/signup', () => {
-        it('should return a new token assigned to a new user', async () => {
+        it('should return a new token assigned to a new user', async (done) => {
             expect(1 === 1).toBeTruthy();
             // const res = await request(app).post('/test/v2/signup');
             // expect(res.status).toEqual(200);
             // expect(res.body.token.length).toEqual(120);
+            done();
         });
     });
 });

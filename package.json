@@ -14,7 +14,7 @@
     "typeorm:dev": "rm -rf ./build && tsc && NODE_ENV=development ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "typeorm:local": "rm -rf ./build && tsc && NODE_ENV=local ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "typeorm:test": "rm -rf ./build && tsc && NODE_ENV=test ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "test": "jest"
+    "test": "jest -i --forceExit"
   },
   "author": "",
   "license": "ISC",

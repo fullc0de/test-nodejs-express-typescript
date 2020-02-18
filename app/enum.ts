@@ -21,9 +21,15 @@ function prevVer(ver: APIVer): APIVer | undefined {
     }
 }
 
+enum SocialService {
+    Facebook = "Facebook",
+    Google = "Google",
+}
+
 export { 
     Resource, 
     APIVer,
     isAPIVer,
-    prevVer
+    prevVer,
+    SocialService
 }

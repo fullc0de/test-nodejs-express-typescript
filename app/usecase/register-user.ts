@@ -3,7 +3,7 @@ import FacebookHelper from '../helper/facebook-helper';
 import { FacebookUserInfo } from '../helper/facebook-helper';
 import { UserCredential, CredentialServiceType } from '../model/user-credential';
 import jwt from 'jsonwebtoken';
-import { Connection } from 'typeorm';
+import { Connection, getConnection } from 'typeorm';
 import { UseCaseError, UseCaseErrorCode } from './usecase-errors';
 
 export interface UserAdditionalInfo {
@@ -12,11 +12,7 @@ export interface UserAdditionalInfo {
 
 export class RegisterUser {
 
-    private connection: Connection;
-
-    constructor(conn: Connection) {
-        this.connection = conn;
-    }
+    private connection: Connection = getConnection();
 
     public async register(facebookToken: string, firstName: string, lastName: string, additional?: UserAdditionalInfo): Promise<Users> {
         const privateKey: string | undefined = process.env.JWT_TOKEN_SECRET;

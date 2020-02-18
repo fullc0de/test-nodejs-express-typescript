@@ -8,7 +8,7 @@ import { Users } from '../../app/model/users';
 (typeorm as any).getConnection = jest.fn();
 
 describe("JWT Auth deco-injector", () => {
-    it("should make deco route exception if 'Authorization' header doesn't exist", async () => {
+    it("should make deco route exception if 'Authorization' header doesn't exist", async (done) => {
         process.env.JWT_TOKEN_SECRET = "test_private_key";
         const injector = new JwtAuthDecoInjector();
         const ctx: Context = {
@@ -28,9 +28,10 @@ describe("JWT Auth deco-injector", () => {
                 expect(e.statusCode).toBe(403);
             }
         }
+        done();
     })
 
-    it("should set user model to the additional in the context", async () => {
+    it("should set user model to the additional in the context", async (done) => {
         const token = jwt.sign({ userId: 1 }, "test_private_key");
         process.env.JWT_TOKEN_SECRET = "test_private_key";
 
@@ -64,5 +65,6 @@ describe("JWT Auth deco-injector", () => {
         expect(user.constructor.name).toEqual("Users");
         expect(user.firstName).toEqual("gildong");
         expect(user.lastName).toEqual("hong");
+        done();
     })
 })

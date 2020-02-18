@@ -2,7 +2,6 @@ import BaseController from '../base-controller';
 import { Route, PostParam } from "../../deco-router";
 import { ControllerInterface } from '../../deco-router/interface/controller-interface';
 import { Context } from '../../deco-router/interface/common-interfaces';
-import { getConnection } from 'typeorm';
 import { DecoRouterError } from '../../deco-router/deco-router-error';
 import validator from 'validator';
 import { RegisterUser } from '../../usecase/register-user';
@@ -34,7 +33,7 @@ export class SignUpController extends BaseController implements ControllerInterf
         const address = ctx.request.body.address;
         const age = ctx.request.body.age;
 
-        const usecase = new RegisterUser(getConnection());
+        const usecase = new RegisterUser();
 
         if (serviceType === "facebook") {
             try {
