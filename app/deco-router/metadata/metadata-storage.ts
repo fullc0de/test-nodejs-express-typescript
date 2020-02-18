@@ -1,8 +1,8 @@
 import * as _ from "lodash";
-import { APIVer, prevVer } from "../enum";
-import { RoutableFunction } from "../deco-router/interface/common-interfaces";
-import { ControllerInterface } from '../deco-router/interface/controller-interface';
-import { InjectorInterface } from '../deco-router/interface/injector-interface';
+import { APIVer, prevVer } from "../../enum";
+import { RoutableFunction } from "../interface/common-interfaces";
+import { ControllerInterface } from '../interface/controller-interface';
+import { InjectorInterface } from '../interface/injector-interface';
 
 interface RouteMetadataInterface {
     version: APIVer,

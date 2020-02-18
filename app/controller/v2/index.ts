@@ -1,7 +1,3 @@
-import { PostController } from './post-controller';
-import { SignUpController } from './signup-controller';
+export * from './post-controller';
+export * from './signup-controller';
 
-export {
-    PostController,
-    SignUpController,
-}

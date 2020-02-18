@@ -1,11 +1,8 @@
+import { Route, UserAuth, QueryParam, PostParam } from "../../deco-router";
 import { PostController as V1 } from "../v1/post-controller";
 import { Context } from "../../deco-router/interface/common-interfaces";
-import { Route } from '../../deco-router/decorator/route';
-import { UserAuth } from '../../deco-router/decorator/user-auth';
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 import { Users } from '../../model/users';
-import { QueryParam } from '../../deco-router/decorator/query-param';
-import { PostParam } from '../../deco-router/decorator/post-param';
 import validator from 'validator';
 
 @Route("posts", "v2")

@@ -1,4 +1,4 @@
-import { MetadataStorage } from '../../app/metadata/metadata-storage';
+import { MetadataStorage } from '../../app/deco-router/metadata/metadata-storage';
 import { Context } from '../../app/deco-router/interface/common-interfaces';
 import { JwtAuthDecoInjector } from '../../app/deco-injector/jwt-auth-deco-injector';
 

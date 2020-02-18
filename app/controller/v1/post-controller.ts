@@ -1,10 +1,8 @@
 import {Context} from "../../deco-router/interface/common-interfaces";
 import BaseController from "../base-controller";
 import { ControllerInterface } from "../../deco-router/interface/controller-interface";
-import { Route } from "../../deco-router/decorator/route";
+import { Route, UserAuth, QueryParam } from "../../deco-router";
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
-import { UserAuth } from '../../deco-router/decorator/user-auth';
-import { QueryParam } from "../../deco-router/decorator/query-param";
 
 @Route("posts", "v1")
 @UserAuth(new JwtAuthDecoInjector())

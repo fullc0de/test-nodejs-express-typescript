@@ -2,17 +2,25 @@ import {Router} from "express";
 import fs from "fs";
 import * as path from 'path';
 import { isAPIVer } from "../enum";
-import { getStore } from '../metadata/index';
+import { getStore } from './metadata/index';
 import makeExpressRoute from './express-router';
 import { InjectorInterface } from './interface/injector-interface';
 import { Context } from "./interface/common-interfaces";
-import { RouteMetadataOptionsInterface } from '../metadata/metadata-storage';
+import { RouteMetadataOptionsInterface } from './metadata/metadata-storage';
 import { RouteCallbacks } from './express-router';
 import { RequestParamMetadata } from './interface/common-interfaces';
 import { ValidateQueryParamMap, ValidatePostParamMap } from './reflect-symbols';
 import _ from "lodash";
 import { DecoRouterError } from './deco-router-error';
 import { ControllerInterface } from './interface/controller-interface';
+export * from "./decorator/route";
+export * from "./decorator/user-auth";
+export * from "./decorator/post-param";
+export * from "./decorator/query-param";
+export * from "./deco-router-error";
+export * from "./interface/injector-interface";
+export * from "./interface/common-interfaces";
+export * from "./metadata";
 
 let beforeInjectors: InjectorInterface[] | undefined = undefined;
 export function registerBeforeInjectors(injectors: InjectorInterface[]) {

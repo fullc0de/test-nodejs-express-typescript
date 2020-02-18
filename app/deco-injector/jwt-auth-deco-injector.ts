@@ -1,9 +1,8 @@
-import { InjectorInterface } from '../deco-router/interface/injector-interface';
 import { Context } from '../deco-router/interface/common-interfaces';
-import { DecoRouterError } from '../deco-router/deco-router-error';
 import { getConnection } from 'typeorm';
 import { Users } from '../model/users';
 import jwt from 'jsonwebtoken';
+import { InjectorInterface, DecoRouterError } from '../deco-router';
 
 export class JwtAuthDecoInjector implements InjectorInterface {
     private privateKey: string | undefined = process.env.JWT_TOKEN_SECRET;

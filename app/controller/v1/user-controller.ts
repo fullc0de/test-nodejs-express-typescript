@@ -1,7 +1,6 @@
-import { Route } from "../../deco-router/decorator/route";
-import { UserAuth } from "../../deco-router/decorator/user-auth";
-import { JwtAuthDecoInjector } from "../../deco-injector/jwt-auth-deco-injector";
 import BaseController from "../base-controller";
+import { Route, UserAuth } from "../../deco-router";
+import { JwtAuthDecoInjector } from "../../deco-injector/jwt-auth-deco-injector";
 import { ControllerInterface } from "../../deco-router/interface/controller-interface";
 import { Context } from "../../deco-router/interface/common-interfaces";
 import { getConnection } from "typeorm";

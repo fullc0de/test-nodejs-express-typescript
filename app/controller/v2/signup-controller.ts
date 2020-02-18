@@ -1,10 +1,9 @@
 import BaseController from '../base-controller';
+import { Route, PostParam } from "../../deco-router";
 import { ControllerInterface } from '../../deco-router/interface/controller-interface';
 import { Context } from '../../deco-router/interface/common-interfaces';
-import { Route } from '../../deco-router/decorator/route';
 import { getConnection } from 'typeorm';
 import { DecoRouterError } from '../../deco-router/deco-router-error';
-import { PostParam } from '../../deco-router/decorator/post-param';
 import validator from 'validator';
 import { RegisterUser } from '../../usecase/register-user';
 import { UseCaseError } from '../../usecase/usecase-errors';

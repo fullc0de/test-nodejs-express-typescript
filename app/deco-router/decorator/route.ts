@@ -1,5 +1,4 @@
-import getCallerFile from 'get-caller-file';
-import { getStore } from '../../metadata/index';
+import { getStore } from '../metadata/index';
 import { isAPIVer } from '../../enum';
 import { ControllerInterface } from '../interface/controller-interface';
 import { UserAuthMap } from '../reflect-symbols';
