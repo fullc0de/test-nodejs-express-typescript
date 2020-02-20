@@ -42,6 +42,9 @@ jobs: # a collection of steps
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
+          name: debug
+          command: docker ps -a
+      - run:
           name: Waiting for Postgres to be ready
           command: |
             for i in `seq 1 10`;
