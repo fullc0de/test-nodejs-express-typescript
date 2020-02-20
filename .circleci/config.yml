@@ -59,6 +59,9 @@ jobs: # a collection of steps
             done
             echo Failed waiting for Postgres && exit 1
       - run:
+          name: migration
+          command: npm run typeorm:test -- migration:run
+      - run:
           name: test
           command: npm test
   deploy:
@@ -89,6 +92,9 @@ jobs: # a collection of steps
               sleep 1
             done
             echo Failed waiting for Postgres && exit 1
+      - run:
+          name: migration
+          command: npm run typeorm:test -- migration:run
       - run:
           name: deploy
           command: npm test
