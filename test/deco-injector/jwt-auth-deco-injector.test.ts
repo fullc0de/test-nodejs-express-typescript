@@ -1,9 +1,8 @@
 import { JwtAuthDecoInjector } from '../../app/deco-injector/jwt-auth-deco-injector';
-import { Context } from '../../app/deco-router/interface/common-interfaces';
-import { DecoRouterError } from '../../app/deco-router/deco-router-error';
 import * as typeorm from 'typeorm';
 import jwt from 'jsonwebtoken';
 import { Users } from '../../app/model/users';
+import { Context, DecoRouterError } from 'deco-router';
 
 (typeorm as any).getConnection = jest.fn();
 
@@ -23,7 +22,6 @@ describe("JWT Auth deco-injector", () => {
         try {
             await injector.inject(ctx);
         } catch(e) {
-            expect(e.constructor.name).toBe(DecoRouterError.name);
             if (e instanceof DecoRouterError) {
                 expect(e.statusCode).toBe(403);
             }

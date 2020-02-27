@@ -1,8 +1,6 @@
+import { Context, Route, UserAuth, ControllerInterface } from "deco-router";
 import BaseController from "../base-controller";
-import { Route, UserAuth } from "../../deco-router";
 import { JwtAuthDecoInjector } from "../../deco-injector/jwt-auth-deco-injector";
-import { ControllerInterface } from "../../deco-router/interface/controller-interface";
-import { Context } from "../../deco-router/interface/common-interfaces";
 import { getConnection } from "typeorm";
 import { Users } from "../../model";
 import InternalError from "../../common/internal-error";

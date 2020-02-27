@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import express from "express";
+import express, { Router } from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
-import { buildRouter } from "./deco-router";
+import { buildRouter } from "deco-router";
 import * as path from 'path';
-import { registerBeforeInjectors, registerAfterInjectors } from './deco-router/index';
+import { registerBeforeInjectors, registerAfterInjectors } from 'deco-router';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 import swaggerUi from 'swagger-ui-express';
 
@@ -36,8 +36,10 @@ const swaggerDoc = require('../../swagger-v1');
 swaggerDoc.host = "localhost:3000";
 app.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+const baseRouter = Router();
 const controllerPath = path.join(__dirname, 'controller');
-app.use(buildRouter('api', controllerPath));
+buildRouter(baseRouter, 'api', controllerPath);
+app.use(baseRouter);
 
 app.use("*", (req, res, next) => {
     res.status(404).send('NOT FOUND');

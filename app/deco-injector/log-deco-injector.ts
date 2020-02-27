@@ -1,5 +1,4 @@
-import { InjectorInterface } from '../deco-router';
-import { Context } from '../deco-router';
+import { Context, InjectorInterface } from 'deco-router';
 
 export class LogDecoInjector implements InjectorInterface {
 
