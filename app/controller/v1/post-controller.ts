@@ -19,7 +19,8 @@ export class PostController extends BaseController implements ControllerInterfac
         ctx.response = {
             statusCode: 200,
             body: {
-                id: ctx.additional.query.postId,
+                id: ctx.request.params.id,
+                postId: ctx.request.query.postId,
                 author: "J. K. Rolling",
                 title: "Harry Potter"
             }
