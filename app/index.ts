@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import express, { Router } from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
-import { buildRouter } from "deco-router";
+import { buildRouter, registerBeforeInjectors, registerAfterInjectors } from "deco-versioning-router";
 import * as path from 'path';
-import { registerBeforeInjectors, registerAfterInjectors } from 'deco-router';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 import swaggerUi from 'swagger-ui-express';
 

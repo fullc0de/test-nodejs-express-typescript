@@ -1,4 +1,4 @@
-import { Context, Route, UserAuth, ControllerInterface } from "deco-router";
+import { Context, Route, UserAuth, ControllerInterface } from "deco-versioning-router";
 import BaseController from "../base-controller";
 import { JwtAuthDecoInjector } from "../../deco-injector/jwt-auth-deco-injector";
 import { getConnection } from "typeorm";

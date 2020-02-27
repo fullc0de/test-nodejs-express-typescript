@@ -2,7 +2,7 @@ import { JwtAuthDecoInjector } from '../../app/deco-injector/jwt-auth-deco-injec
 import * as typeorm from 'typeorm';
 import jwt from 'jsonwebtoken';
 import { Users } from '../../app/model/users';
-import { Context, DecoRouterError } from 'deco-router';
+import { Context, DecoRouterError } from 'deco-versioning-router';
 
 (typeorm as any).getConnection = jest.fn();
 

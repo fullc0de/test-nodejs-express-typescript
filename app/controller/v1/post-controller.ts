@@ -1,6 +1,6 @@
 import BaseController from "../base-controller";
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
-import { Context, Route, UserAuth, ControllerInterface, QueryParam } from "deco-router";
+import { Context, Route, UserAuth, ControllerInterface, QueryParam } from "deco-versioning-router";
 
 @Route("posts", "v1")
 @UserAuth(new JwtAuthDecoInjector())

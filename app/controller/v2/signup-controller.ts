@@ -1,4 +1,4 @@
-import { Context, Route, ControllerInterface, PostParam, DecoRouterError } from "deco-router";
+import { Context, Route, ControllerInterface, PostParam, DecoRouterError } from "deco-versioning-router";
 import BaseController from '../base-controller';
 import validator from 'validator';
 import { RegisterUser } from '../../usecase/register-user';

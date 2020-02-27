@@ -1,4 +1,4 @@
-import { Context, InjectorInterface, DecoRouterError } from 'deco-router';
+import { Context, InjectorInterface, DecoRouterError } from 'deco-versioning-router';
 import { getConnection } from 'typeorm';
 import { Users } from '../model/users';
 import jwt from 'jsonwebtoken';
