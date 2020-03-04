@@ -1,10 +1,13 @@
 import 'reflect-metadata';
+import * as path from 'path';
 import express, { Router } from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
 import { buildRouter, registerBeforeInjectors, registerAfterInjectors } from "deco-versioning-router";
-import * as path from 'path';
 import { LogDecoInjector } from './deco-injector/log-deco-injector';
 import swaggerUi from 'swagger-ui-express';
+import { loadEnv } from "./util";
+
+loadEnv(`${__dirname}/..`);
 
 const app: express.Application = express();
 app.use(express.json());
@@ -31,7 +34,7 @@ app.use("*", (req, res, next) => {
     next();
 });
 
-const swaggerDoc = require('../../swagger-v1');
+const swaggerDoc = require('../swagger-v1');
 swaggerDoc.host = "localhost:3000";
 app.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
