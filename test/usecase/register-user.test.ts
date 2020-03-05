@@ -10,10 +10,10 @@ beforeAll(async (done) => {
         "type": "postgres",
         "url": process.env.POSTGRES_URL,
         "entities": [
-            "build/app/model/**/*.js"
+            "build/model/**/*.js"
         ],
         "migrations": [
-            "build/app/migration/**/*.js"
+            "build/migration/**/*.js"
         ],
         "synchronize": false,
         "dropSchema": true,

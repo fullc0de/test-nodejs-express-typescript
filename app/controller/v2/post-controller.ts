@@ -1,4 +1,4 @@
-import { Context, Route, UserAuth, PostParam, QueryParam } from "deco-versioning-router";
+import { Context, Route, UserAuth, PostParam, QueryParam } from "versionable-express-router";
 import { PostController as V1 } from "../v1/post-controller";
 import { JwtAuthDecoInjector } from '../../deco-injector/jwt-auth-deco-injector';
 import { Users } from '../../model/users';
