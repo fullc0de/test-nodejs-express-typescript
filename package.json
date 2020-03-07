@@ -47,7 +47,8 @@
     "typeorm": "^0.2.21",
     "typescript": "^3.7.3",
     "typescript-json-serializer": "^1.4.3",
-    "validator": "^12.1.0"
+    "validator": "^12.1.0",
+    "versionable-express-router": "^0.1.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
