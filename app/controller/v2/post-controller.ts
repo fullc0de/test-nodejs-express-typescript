@@ -12,27 +12,25 @@ export class PostController extends V1 {
     public async index(ctx: Context) {
         const user: Users = ctx.additional['user'];
 
-        ctx.response = {
-            headers: { "Hello": "World" },
-            statusCode: 200,
+        ctx.response.setHeader("Hello", "World");
+        ctx.response.status(200).json({
             body: { 
                 message: "wow success! V2",
                 author: `${user.firstName} ${user.lastName}`
             }
-        };
+        });
     }
 
     @PostParam("hello", { required: false })
     @PostParam("age", { required: true, validate: (v) => validator.isInt(v), errorMessage: "'age' param must be an integer." })
     public async post(ctx: Context) {
-        ctx.response = {
-            statusCode: 200,
+        ctx.response.status(200).json({
             body: { 
                 message: "posting done V2",
                 dummy: ctx.request.query.dummyQuery,
                 age: ctx.request.body.age,
                 hello: ctx.request.body.hello
             }
-        };
+        });
     }
 }

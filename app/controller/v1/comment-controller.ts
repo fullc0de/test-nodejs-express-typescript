@@ -8,22 +8,20 @@ export class CommentController extends BaseController implements ControllerInter
     
     public async index(ctx: Context) {
 
-        ctx.response = {
-            statusCode: 200,
+        ctx.response.status(200).json({
             body: { message: "no comment at v1" }
-        };
+        });
     }
 
     public async show(ctx: Context) {
         const commentId = ctx.request.params.id;
 
-        ctx.response = {
-            statusCode: 200,
+        ctx.response.status(200).json({
             body: {
                 id: commentId,
                 author: "kyokook",
                 message: "Good job!!"
             }
-        };
+        });
     }
 }

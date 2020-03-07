@@ -7,23 +7,20 @@ import { Context, Route, UserAuth, ControllerInterface, QueryParam } from "versi
 export class PostController extends BaseController implements ControllerInterface {
     
     public async index(ctx: Context) {
-
-        ctx.response = {
-            statusCode: 200,
+        ctx.response.status(200).json({
             body: { message: "wow success! V1" }
-        };
+        });
     }
 
     @QueryParam("postId", { required: true })
     public async show(ctx: Context) {
-        ctx.response = {
-            statusCode: 200,
+        ctx.response.status(200).json({
             body: {
                 id: ctx.request.params.id,
                 postId: ctx.request.query.postId,
                 author: "J. K. Rolling",
                 title: "Harry Potter"
             }
-        };
+        });
     }
 }

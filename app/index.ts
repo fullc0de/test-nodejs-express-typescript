@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import * as path from 'path';
-import express, { Router } from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 import {createConnections, getConnectionOptions} from "typeorm";
-import { buildRouter, registerBeforeInjectors, registerAfterInjectors } from "versionable-express-router";
-import { LogDecoInjector } from './deco-injector/log-deco-injector';
+import { buildRouter, registerBeforeInjectors, registerAfterInjectors, DecoRouterError } from "versionable-express-router";
 import swaggerUi from 'swagger-ui-express';
 import { loadEnv } from "./util";
 
@@ -25,9 +24,7 @@ app.use(express.json());
 });
 
 registerBeforeInjectors([]);
-registerAfterInjectors([
-    new LogDecoInjector()
-]);
+registerAfterInjectors([]);
 
 app.use("*", (req, res, next) => {
     console.log("start preprocess...");
@@ -43,8 +40,18 @@ const controllerPath = path.join(__dirname, 'controller');
 buildRouter(baseRouter, 'api', controllerPath);
 app.use(baseRouter);
 
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof DecoRouterError) {
+        res.status(err.statusCode).send({ error: err.message });
+    } else {
+        res.status(500).send({ error: err.message });
+    }
+});
+
 app.use("*", (req, res, next) => {
-    res.status(404).send('NOT FOUND');
+    if (res.headersSent == false) {
+        res.status(404).send('NOT FOUND');
+    }
 });
 
 app.listen(3000, function() {

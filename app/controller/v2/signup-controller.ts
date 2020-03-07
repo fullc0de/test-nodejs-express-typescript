@@ -35,12 +35,11 @@ export class SignUpController extends BaseController implements ControllerInterf
         if (serviceType === "facebook") {
             try {
                 const user = await usecase.register(serviceToken, firstName, lastName, { address: address });
-                ctx.response = {
-                    statusCode: 200,
+                ctx.response.status(200).json({
                     body: {
                         data: user
                     }
-                }
+                })
             } catch(e) {
                 throw new DecoRouterError(500, (e as UseCaseError).message);
             }
